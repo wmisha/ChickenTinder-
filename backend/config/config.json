@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "lev",
+    "password": null,
+    "database": "todo_project",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": "0"
+  },
+  "test": {
+    "username": "lev",
+    "password": null,
+    "database": "todo_project",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": "0"
+  },
+  "production": {
+    "username": "lev",
+    "password": null,
+    "database": "todo_project",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": "0"
+  }
+}
