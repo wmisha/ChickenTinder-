@@ -20,9 +20,9 @@ router.get("/", (req, res) => {
             return acc;
         }, {});
 
-        // leave the option open to filter by user
-        //res.send(results);
-        res.send(results["NO_USER"].sort(x => x.id));
+        const specificResults = results["NO_USER"] || [];
+
+        res.send(specificResults);
     })
 })
 
