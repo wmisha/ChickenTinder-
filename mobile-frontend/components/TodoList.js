@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { View, Dimensions, StyleSheet } from 'react-native';
 
 import TopBar from './TopBar.js';
 import AddTodo from './AddTodo.js';
@@ -19,7 +19,6 @@ export default class TodoList extends React.Component {
 
         this.changeEditId = this.changeEditId.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
-        //this.componentWillMount = this.componentWillMount.bind(this);
     }
 
     async getTodos() {
@@ -56,12 +55,22 @@ export default class TodoList extends React.Component {
 
     render(){
         return (
-            <View>
-                <TopBar />
+            <View style={styles.long}>
+                <TopBar navigation="cheese" />
                 <EditTodo id={this.state.editId} showing={this.state.editShowing} onHide={this.revertVisibility} onSubmit={this.refreshTodos}/>
-                <AddTodo onSubmit={this.refreshTodos}/>
                 <ListTodos onChange={this.refreshTodos} todos={this.state.todos} onEdit={this.changeEditId}/>
+                <AddTodo onSubmit={this.refreshTodos} />
+
             </View>
         )
     }
 }
+
+
+let ScreenHeight = Dimensions.get("window").height;
+
+const styles = StyleSheet.create({
+    long: {
+        height: ScreenHeight
+    }
+})

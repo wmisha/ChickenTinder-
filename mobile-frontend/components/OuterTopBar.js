@@ -5,22 +5,22 @@ import { Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 
-const TopBar = (props) => {
+const OuterTopBar = () => {
     const navigation = useNavigation();
     return (
         <Appbar.Header style={styles.topBar}>
-            <Appbar.Action color="white" icon="layers-triple-outline" onPress={() => navigation.navigate('Secondary')} />
+            <Appbar.Action color="white" icon="skew-less" onPress={() => navigation.navigate('Primary')} />
             <Appbar.Content
                 color="white"
                 style={styles.textPart}
-                title="Todo List"
-                subtitle="Mobile Version"
+                title="Todo List App"
+                subtitle="Select a list, or make a new one!"
             />
         </Appbar.Header>
     )
 }
 
-export default TopBar;
+export default OuterTopBar;
 const styles = StyleSheet.create({
     topBar: {
         marginBottom: 0,

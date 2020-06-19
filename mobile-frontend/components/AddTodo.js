@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Searchbar } from 'react-native-paper';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default class AddTodo extends React.Component {
 
@@ -38,6 +39,7 @@ export default class AddTodo extends React.Component {
 
         return (
             <Searchbar
+                style={styles.searchBar}
                 icon="plus"
                 placeholder="Add a todo"
                 searchAccessibilityLabel="Form to add a todo item"
@@ -50,4 +52,14 @@ export default class AddTodo extends React.Component {
     }
 
 };
+
+
+const styles = StyleSheet.create({
+    searchBar: {
+        position: 'absolute',
+        bottom: 140,
+        left: 30,
+        right: 30,
+    },
+});
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-native'
 import { List } from 'react-native-paper';
 
 export default class ListTodos extends React.Component {
@@ -49,7 +49,7 @@ export default class ListTodos extends React.Component {
                     return (
                         <TouchableOpacity onPress={() => { this.onEdit(todo.id) }}>
                             <List.Icon color="#1D3557" icon="pencil" />
-                    </TouchableOpacity>)
+                        </TouchableOpacity>)
                 }}
                 right={() => {
                     return(
@@ -62,9 +62,22 @@ export default class ListTodos extends React.Component {
         console.log("Now todos: ", todos)
 
         return (
-            <List.Section>
-                { todos }
-            </List.Section>
+            <ScrollView style={styles.height}>
+                <List.Section style= {{marginTop: 20}}>
+                    { todos }
+                </List.Section>
+            </ScrollView>
         )
     }
 }
+
+let height = Dimensions.get("window").height;
+
+const styles = StyleSheet.create({
+    height: {
+        maxHeight:  0.68 * height
+    }
+
+})
+
+
