@@ -33,6 +33,7 @@ const EditTodo = (props) => {
     useEffect(() => {
         setId(props.id)
     }, [props.id])
+
      useEffect(() => {
         setVisible(props.showing)
     }, [props.showing]);
@@ -71,7 +72,7 @@ const EditTodo = (props) => {
                     value={todoInput}
                 />
                 <Dialog.Actions>
-                    <Button onPress={submitTodo}>Submit</Button>
+                    <Button onPress={() => {submitTodo(); hideDialogue() }}>Submit</Button>
                     <Button color="red" onPress={hideDialogue}>Cancel</Button>
                 </Dialog.Actions>
             </Dialog>

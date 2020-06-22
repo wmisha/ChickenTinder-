@@ -19,10 +19,11 @@ const ListTodos = (props) => {
     const onChange = props.onChange || (() => { })
     const onEdit = props.onEdit || (() => { })
 
-
     const route = props.route || `http://localhost:5000/todos/`
 
     const navigation = useNavigation();
+
+    let scrollView;
 
     const onSelect = props.onSelect ? (id) => { props.onSelect(id).then(() => navigation.navigate('Primary'))} : (() => { })
 
@@ -74,8 +75,8 @@ const ListTodos = (props) => {
     });
     return (
         <ScrollView
-            ref={ ref => { this.scrollView = ref }}
-            onContentSizeChange={() => this.scrollView.scrollToEnd({ animated: true })}
+            ref={ ref => { scrollView = ref }}
+            onContentSizeChange={() => scrollView.scrollToEnd({ animated: true })}
             style={styles.height}>
 
             <List.Section style={{ marginTop: 20 }}>
