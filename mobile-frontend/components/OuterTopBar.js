@@ -9,7 +9,6 @@ const OuterTopBar = () => {
     const navigation = useNavigation();
     return (
         <Appbar.Header style={styles.topBar}>
-            <Appbar.Action color="white" icon="skew-less" onPress={() => navigation.navigate('Primary')} />
             <Appbar.Content
                 color="white"
                 style={styles.textPart}

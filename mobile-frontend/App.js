@@ -1,32 +1,46 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-
+import ListOfLists from './components/ListOfLists'
 import TodoList from './components/TodoList';
 import BlankComponent from './components/BlankComponent';
 
+import WhichListContext from './components/WhichListContext'
+import ListNameContext from './components/ListNameContext';
 
 const Drawer = createDrawerNavigator();
 
+const App = () => {
+  const [todoListId, setTodoListId] = useState(8);
+  const [todoListName, setTodoListName] = useState('hmm');
 
-export default class App extends React.Component {
+  const onSelect = async (id) => {
 
-  state = {
-    todoListId: 0
+    //alert(`inside onselect, switching to ${id}`)
+    if (id) {
+      await setTodoListId(id);
+    }
   }
 
-  render() {
-    return (
-    <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="Primary">
-          { props => <TodoList {...props} id={this.todoListId}> </TodoList>}
-        </Drawer.Screen>
-        <Drawer.Screen name="Secondary" component={BlankComponent} />
-      </Drawer.Navigator>
-    </NavigationContainer>)
-  }
-}
+   return (
+     <ListNameContext.Provider value={[todoListName, setTodoListName]}>
+      <WhichListContext.Provider value={[todoListId, setTodoListId]}>
+        <NavigationContainer>
+          <Drawer.Navigator edgeWidth={0}>
+            <Drawer.Screen name="Secondary">
+              {props => <ListOfLists {...props} route='http://localhost:5000/todos/' onSelect={onSelect} id={todoListId} initialParams={{ id: todoListId }} />}
+            </Drawer.Screen>
+            <Drawer.Screen name="Primary">
+              {props => <TodoList {...props} id={todoListId} />}
+            </Drawer.Screen>
 
+          </Drawer.Navigator>
+        </NavigationContainer>
+        </WhichListContext.Provider>
+       </ListNameContext.Provider>
+    )
+} 
+
+export default App;

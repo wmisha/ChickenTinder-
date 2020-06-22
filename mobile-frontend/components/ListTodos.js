@@ -1,75 +1,86 @@
-import * as React from 'react';
+import  React, {useState, useEffect, useContext } from 'react';
 import { TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-native'
 import { List } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
-export default class ListTodos extends React.Component {
+import WhichListContext from './WhichListContext'
+import ListNameContext from './ListNameContext';
 
-    constructor(props){
-        super(props);
 
-        this.onChange = this.props.onChange || (() => {})
-        this.onEdit = this.props.onEdit || (() => {})
-        
-        this.state = {
-            todos: this.props.todos.sort((a, b) => a.id - b.id)
-        }
 
-    }
+const ListTodos = (props) => {
 
-    deleteTodo(id){
-        fetch(`http://localhost:5000/todos/${id}`, {
+    const [todos, setTodos] = useState(props.todos.sort && props.todos.sort((a, b) => a.id - b.id));
+    const [todoListId, setTodoListId] = useContext(WhichListContext)
+
+    const [todoListName, setTodoListName] = useContext(ListNameContext);
+    const onChange = props.onChange || (() => { })
+    const onEdit = props.onEdit || (() => { })
+
+
+    const route = props.route || `http://localhost:5000/todos/`
+
+    const navigation = useNavigation();
+
+    const onSelect = props.onSelect ? (id) => { props.onSelect(id).then(() => navigation.navigate('Primary'))} : (() => { })
+
+    const deleteTodo = (id) => {
+        const location = props.outer === "yes" ? `${route}${id}` : `${route}${todoListId}/${id}`
+        fetch(location, {
             method: 'DELETE'
         }).then(() => {
-            this.onChange();
+            onChange();
         })
 
     }
 
-    // deprecated
-    //componentWillReceiveProps(nextProps){
-    //    this.setState({todos: nextProps.todos});
-   // }
+    useEffect(() => {
+        if (props.todos && props.todos.sort !== undefined){
+            setTodos(props.todos.sort((a, b) => a.id - b.id))
+        }
 
-   // replacement
-   static getDerivedStateFromProps(nextProps, previousState){
-       if (nextProps.todos !== previousState.todos)
-          return {todos: nextProps.todos.sort((a, b) => b.id - a.id)};
-       else
-          return null;
-   }
-
-    render () {
-        const todos = this.state.todos.map((todo) => {
-            return (
+        if (props.todoListId){
+            setTodoListId(props.todoListId)
+        }
+    })
+    
+    const todoRender = todos.map((todo) => {
+        return (
             <List.Item
-                style = {{margin: -10, textAlign: 'center'}}
-                key = {todo.id}
-                title={todo.todo}
+                onPress={() => { 
+                    onSelect(todo.id) 
+
+                    if (todo.name){
+                        setTodoListName(todo.name)
+                    }
+                }}
+                style={{ margin: -10, textAlign: 'center' }}
+                key={todo.id}
+                title={todo.todo || todo.name}
                 left={() => {
                     return (
-                        <TouchableOpacity onPress={() => { this.onEdit(todo.id) }}>
+                        <TouchableOpacity onPress={() => { onEdit(todo.id) }}>
                             <List.Icon color="#1D3557" icon="pencil" />
                         </TouchableOpacity>)
                 }}
                 right={() => {
-                    return(
-                        <TouchableOpacity onPress={() => { this.deleteTodo(todo.id)}}>
-                            <List.Icon color="#E63946" icon="delete" onPress={() => this.deleteTodo(todo.id)}  />
+                    return (
+                        <TouchableOpacity onPress={() => { deleteTodo(todo.id) }}>
+                            <List.Icon color="#E63946" icon="delete" onPress={() => deleteTodo(todo.id)} />
                         </TouchableOpacity>);
                 }}
-                />);});
-        console.log(this)
-        console.log("Now todos: ", todos)
+            />);
+    });
+    return (
+        <ScrollView style={styles.height}>
+            <List.Section style={{ marginTop: 20 }}>
+                {todoRender}
+            </List.Section>
+        </ScrollView>)
 
-        return (
-            <ScrollView style={styles.height}>
-                <List.Section style= {{marginTop: 20}}>
-                    { todos }
-                </List.Section>
-            </ScrollView>
-        )
-    }
 }
+
+export default ListTodos;
 
 let height = Dimensions.get("window").height;
 
@@ -78,6 +89,6 @@ const styles = StyleSheet.create({
         maxHeight:  0.68 * height
     }
 
-})
+}) 
 
 

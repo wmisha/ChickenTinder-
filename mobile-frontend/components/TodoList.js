@@ -1,71 +1,67 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-import { View, Dimensions, StyleSheet } from 'react-native';
+import { View, Dimensions, StyleSheet, Button } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
+
 
 import TopBar from './TopBar.js';
 import AddTodo from './AddTodo.js';
 import ListTodos from './ListTodos.js';
 import EditTodo from './EditTodo.js';
 
+import WhichListContext from './WhichListContext';
 
-export default class TodoList extends React.Component {
-    constructor(props){
-        super(props);
+const TodoList = (props) => {
+    const [todos, setTodos] = useState([]);
+    const [editId, setEditId] = useState(0);
+    const [editShowing, setEditShowing] = useState(false);
 
-        this.state = { todos: [], editId: 0, editShowing: false }
+    const navigation = useNavigation();
+    const [todoListId, setTodoListId] = useContext(WhichListContext);
 
-        this.refreshTodos = this.refreshTodos.bind(this);
-        this.revertVisibility = this.revertVisibility.bind(this);
+    const route = `http://localhost:5000/todos/`
 
-        this.changeEditId = this.changeEditId.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
-    }
+    const onSelect = props.onSelect || (async () => { })
 
-    async getTodos() {
-        const response = await fetch('http://localhost:5000/todos')
+    const getTodos = async () => {
+        const response = await fetch(`${route}${todoListId}`);
         const todos = await response.json();
 
-        console.log("TODOS TYPE", typeof todos);
-        console.log("TODOS", todos);
         return todos;
     }
 
-    refreshTodos = () => {
-        this.getTodos().then(todos => {this.setState({todos: todos})})
+    const refreshTodos = () => {
+        // So we load a blank list instead of the wrong list
+        // if we lose network connection
+        setTodos([]);
+
+        // during the getTodos call
+        getTodos().then(todos => setTodos(todos));
     }
 
-    changeEditId = (editId) => {
-        console.log("BUtton went throughQ");
-        this.setState({editId})
-        this.setState({editShowing: true})
-        console.log(this.state)
+
+    const changeEditId = (newEditId) => {
+        setEditId(newEditId)
+        setEditShowing(true);
     }
 
-    revertVisibility = () => {
-        this.setState({ editShowing: false })
+    const revertVisibility = () => {
+        setEditShowing(false);
     }
 
-    //componentWillMount(){
-    //    this.refreshTodos();
-    //}
+    useEffect(() => refreshTodos(), [todoListId]);
 
-    componentDidMount(){
-        this.refreshTodos();
-    }
-
-    render(){
-        return (
-            <View style={styles.long}>
-                <TopBar navigation="cheese" />
-                <EditTodo id={this.state.editId} showing={this.state.editShowing} onHide={this.revertVisibility} onSubmit={this.refreshTodos}/>
-                <ListTodos onChange={this.refreshTodos} todos={this.state.todos} onEdit={this.changeEditId}/>
-                <AddTodo onSubmit={this.refreshTodos} />
-
-            </View>
-        )
-    }
+    return (
+        <View style={styles.long}>
+            <TopBar navigation="cheese" />
+            <EditTodo id={editId} showing={editShowing} onHide={revertVisibility} onSubmit={refreshTodos} route={route} todoListId={todoListId} />
+            <ListTodos onChange={refreshTodos} todos={todos} id={todoListId} onEdit={changeEditId} route={route} onSelect={onSelect} />
+            <AddTodo onSubmit={refreshTodos} route={route} specific={true} />
+        </View>
+    )
 }
-
+export default TodoList; 
 
 let ScreenHeight = Dimensions.get("window").height;
 

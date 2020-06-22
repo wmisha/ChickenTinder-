@@ -1,19 +1,21 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native'
 import { Appbar } from 'react-native-paper';
 
 import { useNavigation } from '@react-navigation/native';
+import ListNameContext from './ListNameContext';
 
+const TopBar = () => {
+    const [todoListName, setTodoListName] = useContext(ListNameContext);
 
-const TopBar = (props) => {
     const navigation = useNavigation();
     return (
         <Appbar.Header style={styles.topBar}>
-            <Appbar.Action color="white" icon="layers-triple-outline" onPress={() => navigation.navigate('Secondary')} />
+            <Appbar.Action color="white" icon="arrow-left" onPress={() => navigation.navigate('Secondary')} />
             <Appbar.Content
                 color="white"
                 style={styles.textPart}
-                title="Todo List"
+                title={todoListName}
                 subtitle="Mobile Version"
             />
         </Appbar.Header>

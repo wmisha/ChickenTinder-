@@ -5,11 +5,13 @@ module.exports = (sequelize, DataTypes) => {
     pwd_hash: DataTypes.STRING,
     salt: DataTypes.STRING
   }, {});
+
   User.associate = function(models) {
-    User.hasMany(models.Todo, {
+    User.hasMany(models.TodoList, {
       foreignKey: 'user_id',
-      as: 'todos'
+      as: 'todoLists'
     })
+
   };
   return User;
 };

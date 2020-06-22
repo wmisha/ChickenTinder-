@@ -1,58 +1,49 @@
-import * as React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Searchbar } from 'react-native-paper';
 import { StyleSheet, Dimensions } from 'react-native';
 
-export default class AddTodo extends React.Component {
+import WhichListContext from './WhichListContext';
 
-    constructor(props){
-        super(props);
+const AddTodo = (props) => {
+    const [todoInput, setTodoInput] = useState('');
+    const [todoListId, setTodoListId] = useContext(WhichListContext);
 
-        this.state = {
-            todoInput: '',
-        }
+    let route = props.route || 'http://localhost:5000/todos/';
 
-        this.onSubmit = this.props.onSubmit || (() => {});
-        this._onChangeTodo = this._onChangeTodo.bind(this);
-        this._submitTodo = this._submitTodo.bind(this);
+    if (props.specific === true){
+        route = `${route}${todoListId}`;
     }
 
+    const onSubmit = props.onSubmit || (() => { });
 
-    _onChangeTodo = input => this.setState({ todoInput: input  })
+    const _submitTodo = () => {
 
-    _submitTodo = () => {
-        const {todoInput} = this.state;
-
-        fetch('http://localhost:5000/todos/', {
+        fetch(route, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({todo: todoInput})
+            body: JSON.stringify({ todo: todoInput, name: todoInput })
         }).then(() => {
-            this.setState({ todoInput: '' })
-            this.onSubmit();
+            setTodoInput('')
+            onSubmit();
         })
-
-
     }
 
-    render() {
-        const { todoInput } = this.state;
+    return (
+        <Searchbar
+            style={styles.searchBar}
+            icon="plus"
+            placeholder="Add a todo"
+            searchAccessibilityLabel="Form to add a todo item"
+            onChangeText={setTodoInput}
+            onSubmitEditing={_submitTodo} // for enter key
+            onIconPress={_submitTodo} // for pressing the icon
+            value={todoInput}
+        />
+    )
 
-        return (
-            <Searchbar
-                style={styles.searchBar}
-                icon="plus"
-                placeholder="Add a todo"
-                searchAccessibilityLabel="Form to add a todo item"
-                onChangeText={this._onChangeTodo}
-                onSubmitEditing={this._submitTodo} // for enter key
-                onIconPress={this._submitTodo} // for pressing the icon
-                value={this.state.todoInput}
-            />
-        )
-    }
+}
 
-};
-
+export default AddTodo;
 
 const styles = StyleSheet.create({
     searchBar: {
