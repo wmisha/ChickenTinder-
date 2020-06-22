@@ -40,7 +40,7 @@ const EditTodo = (props) => {
     const hideDialogue = () => {
         onHide();
         setVisible(false);
-        setTodoInput('');
+        setTodoInput(editText);
     }
 
     const onChangeTodo = input => setTodoInput(input)
@@ -52,7 +52,6 @@ const EditTodo = (props) => {
             body: JSON.stringify({ todo: todoInput, name: todoInput })
         }).then(() => {
             onSubmit();
-
         }).catch(err => console.log(err))
     }
 
