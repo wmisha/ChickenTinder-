@@ -32,7 +32,7 @@ const AddTodo = (props) => {
         <Searchbar
             style={styles.searchBar}
             icon="plus"
-            placeholder="Add a todo"
+            placeholder={ props.outer ? "Add a List" : "Add a Todo" }
             searchAccessibilityLabel="Form to add a todo item"
             onChangeText={setTodoInput}
             onSubmitEditing={_submitTodo} // for enter key

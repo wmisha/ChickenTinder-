@@ -10,6 +10,8 @@ import AddTodo from './AddTodo.js';
 import ListTodos from './ListTodos.js';
 import EditTodo from './EditTodo.js';
 
+
+import ListNameContext from './ListNameContext';
 import WhichListContext from './WhichListContext';
 
 const TodoList = (props) => {
@@ -32,11 +34,6 @@ const TodoList = (props) => {
     }
 
     const refreshTodos = () => {
-        // So we load a blank list instead of the wrong list
-        // if we lose network connection
-        setTodos([]);
-
-        // during the getTodos call
         getTodos().then(todos => setTodos(todos));
     }
 
@@ -50,11 +47,18 @@ const TodoList = (props) => {
         setEditShowing(false);
     }
 
-    useEffect(() => refreshTodos(), [todoListId]);
+    useEffect(() => {
+        // So we load a blank list instead of the wrong list
+        // if we lose network connection
+        setTodos([]);
+
+        // while refreshing todos
+        refreshTodos();
+    }, [todoListId]);
 
     return (
         <View style={styles.long}>
-            <TopBar navigation="cheese" />
+            <TopBar todos={todos} />
             <EditTodo id={editId} showing={editShowing} onHide={revertVisibility} onSubmit={refreshTodos} route={route} todoListId={todoListId} />
             <ListTodos onChange={refreshTodos} todos={todos} id={todoListId} onEdit={changeEditId} route={route} onSelect={onSelect} />
             <AddTodo onSubmit={refreshTodos} route={route} specific={true} />

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Button, Dialog, Portal, Searchbar } from 'react-native-paper';
 
 import WhichListContext from './WhichListContext';
+import EditTextContext from './EditTextContext';
 
 const EditTodo = (props) => {
 
@@ -11,14 +12,18 @@ const EditTodo = (props) => {
 
     let [visible, setVisible] = useState(props.showing || false)
 
+    const [editText, setEditText] = useContext(EditTextContext);
     const [todoListId, setTodoListId] = useContext(WhichListContext);
     const [isList, setIsList] = useState(props.isList || false);
     const [id, setId] = useState(props.id)
 
 
-    const [todoInput, setTodoInput] = useState('');
+    const [todoInput, setTodoInput] = useState(editText);
 
-
+    useEffect(() => {
+        setTodoInput(editText)
+    }, [editText])
+    
     const fullRoute = isList ? `${route}${id}` : `${route}${todoListId}/${id}` ;
 
     useEffect(() => {
@@ -41,13 +46,11 @@ const EditTodo = (props) => {
     const onChangeTodo = input => setTodoInput(input)
 
     const submitTodo = () => {
-        alert('Making request to ' + fullRoute)
         fetch(fullRoute, {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ todo: todoInput, name: todoInput })
         }).then(() => {
-            setTodoInput('')
             onSubmit();
 
         }).catch(err => console.log(err))
@@ -58,9 +61,9 @@ const EditTodo = (props) => {
             <Dialog
                 visible={visible}
                 onDismiss={hideDialogue}>
-                <Dialog.Title>Update { isList? "List" : "Todo" } #{id} </Dialog.Title>
+                <Dialog.Title>Update { isList ? "List" : "Todo" } #{id} </Dialog.Title>
                 <Searchbar
-                    icon="plus"
+                    icon='circle-edit-outline'
                     placeholder={isList ? "Edit List" : "Edit Todo"} 
                     searchAccessibilityLabel="Form to add a todo item"
                     onChangeText={onChangeTodo}
@@ -69,7 +72,8 @@ const EditTodo = (props) => {
                     value={todoInput}
                 />
                 <Dialog.Actions>
-                    <Button onPress={hideDialogue}>Done</Button>
+                    <Button onPress={submitTodo}>Submit</Button>
+                    <Button color="red" onPress={hideDialogue}>Cancel</Button>
                 </Dialog.Actions>
             </Dialog>
         </Portal>

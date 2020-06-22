@@ -46,7 +46,7 @@ const ListOfLists = (props) => {
             <OuterTopBar navigation="cheese" />
             <EditTodo showing={editShowing} onHide={revertVisibility} onSubmit={refreshTodos} route={route} id={editId} isList={true}/>
             <ListTodos outer="yes" onChange={refreshTodos} todos={todos} id={todoListId} onEdit={changeEditId} route={route} onSelect={onSelect} />
-            <AddTodo onSubmit={refreshTodos} route={route} />
+            <AddTodo outer="yes" onSubmit={refreshTodos} route={route} />
             <Text>{props.params}</Text>
         </View>
     )

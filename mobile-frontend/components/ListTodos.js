@@ -6,12 +6,14 @@ import { useNavigation } from '@react-navigation/native';
 import WhichListContext from './WhichListContext'
 import ListNameContext from './ListNameContext';
 
-
+import EditTextContext from './EditTextContext';
 
 const ListTodos = (props) => {
 
     const [todos, setTodos] = useState(props.todos.sort && props.todos.sort((a, b) => a.id - b.id));
     const [todoListId, setTodoListId] = useContext(WhichListContext)
+
+    const [editText, setEditText] = useContext(EditTextContext);
 
     const [todoListName, setTodoListName] = useContext(ListNameContext);
     const onChange = props.onChange || (() => { })
@@ -49,7 +51,6 @@ const ListTodos = (props) => {
             <List.Item
                 onPress={() => { 
                     onSelect(todo.id) 
-
                     if (todo.name){
                         setTodoListName(todo.name)
                     }
@@ -59,7 +60,7 @@ const ListTodos = (props) => {
                 title={todo.todo || todo.name}
                 left={() => {
                     return (
-                        <TouchableOpacity onPress={() => { onEdit(todo.id) }}>
+                        <TouchableOpacity onPress={() => { setEditText(todo.name || todo.todo); onEdit(todo.id) }}>
                             <List.Icon color="#1D3557" icon="pencil" />
                         </TouchableOpacity>)
                 }}
@@ -72,7 +73,11 @@ const ListTodos = (props) => {
             />);
     });
     return (
-        <ScrollView style={styles.height}>
+        <ScrollView
+            ref={ ref => { this.scrollView = ref }}
+            onContentSizeChange={() => this.scrollView.scrollToEnd({ animated: true })}
+            style={styles.height}>
+
             <List.Section style={{ marginTop: 20 }}>
                 {todoRender}
             </List.Section>
