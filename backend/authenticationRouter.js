@@ -25,3 +25,5 @@ router.post("/register", (req, res) => {
     // if the user DOES EXIST, send back and error
     // otherwise, store username: username, salt: N, pwd_hash: H<password || salt> in the table
 })
+
+module.exports = router;
