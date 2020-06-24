@@ -6,9 +6,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import ListOfLists from './components/ListOfLists'
 import TodoList from './components/TodoList';
 
-import WhichListContext from './components/WhichListContext'
-import ListNameContext from './components/ListNameContext';
-import EditTextContext from './components/EditTextContext';
+import WhichListContext from './contexts/WhichListContext'
+import ListNameContext from './contexts/ListNameContext';
+import EditTextContext from './contexts/EditTextContext';
 
 const Drawer = createDrawerNavigator();
 

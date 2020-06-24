@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button, Dialog, Portal, Searchbar } from 'react-native-paper';
-
+import { KeyboardAvoidingView, Keyboard } from 'react-native';
 import WhichListContext from './WhichListContext';
 import EditTextContext from './EditTextContext';
 
@@ -62,17 +62,21 @@ const EditTodo = (props) => {
                 visible={visible}
                 onDismiss={hideDialogue}>
                 <Dialog.Title>Update { isList ? "List" : "Todo" } #{id} </Dialog.Title>
-                <Searchbar
-                    icon='circle-edit-outline'
-                    placeholder={isList ? "Edit List" : "Edit Todo"} 
-                    searchAccessibilityLabel="Form to add a todo item"
-                    onChangeText={onChangeTodo}
-                    onSubmitEditing={submitTodo} // for enter key
-                    onIconPress={submitTodo} // for pressing the icon
-                    value={todoInput}
-                />
+                <KeyboardAvoidingView  behavior="position">
+                    <Searchbar
+                        icon='circle-edit-outline'
+                        iconColor='#1D3557'
+                        returnKeyType="done"
+                        placeholder={isList ? "Edit List" : "Edit Todo"} 
+                        searchAccessibilityLabel="Form to add a todo item"
+                        onChangeText={onChangeTodo}
+                        onSubmitEditing={submitTodo} // for enter key
+                        onIconPress={submitTodo} // for pressing the icon
+                        value={todoInput}
+                    />
+                </KeyboardAvoidingView>
                 <Dialog.Actions>
-                    <Button onPress={() => {submitTodo(); hideDialogue() }}>Submit</Button>
+                    <Button color="#3A86FF" onPress={() => {submitTodo(); hideDialogue() }}>Submit</Button>
                     <Button color="red" onPress={hideDialogue}>Cancel</Button>
                 </Dialog.Actions>
             </Dialog>

@@ -5,7 +5,7 @@ router.use(express.json());
 
 const db = require(__dirname + '/models/index.js');
 
-const { bodyHasPropValidator, idToDatabaseEntityValidator, tryCatchMiddleware } = require('./validators.js');
+const { bodyHasPropValidator, tryCatchMiddleware } = require('./validators.js');
 
 router.use(tryCatchMiddleware);
 
@@ -75,7 +75,6 @@ router.get("/:list_id", async ({list}, res) => {
     res.send(list);
 })
 
-
 router.put("/:list_id", 
            bodyHasPropValidator('name'),
            async (req, res) => {
@@ -113,6 +112,5 @@ router.delete("/:list_id/:todo_id", async (req, res) => {
     await req.todo.destroy();
     res.send(item);
 })
-
 
 module.exports = router;

@@ -3,10 +3,10 @@ import { TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-nati
 import { List } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
-import WhichListContext from './WhichListContext'
-import ListNameContext from './ListNameContext';
+import WhichListContext from '../contexts/WhichListContext'
+import ListNameContext from '../contexts/ListNameContext';
 
-import EditTextContext from './EditTextContext';
+import EditTextContext from '../contexts/EditTextContext';
 
 const ListTodos = (props) => {
 

@@ -13,6 +13,7 @@ const ListOfLists = (props) => {
     const [editId, setEditId] = useState(0);
     const [editShowing, setEditShowing] = useState(false);
     const [todoListId, setTodoListId] = useState(props.id);
+    const [height, setHeight] = useState(Dimensions.get("window").height)
 
     const route = `http://localhost:5000/todos/`
 
@@ -39,10 +40,16 @@ const ListOfLists = (props) => {
         setEditShowing(false);
     }
 
-    useEffect(() => refreshTodos(), []);
+    const onLayout = (e) => {
+        setHeight(Dimensions.get('window').height)
+    }
+
+    useEffect(() => {
+        refreshTodos()
+    }, []);
 
     return (
-        <View style={styles.long}>
+        <View style={{height}} onLayout={onLayout}>
             <OuterTopBar navigation="cheese" />
             <EditTodo showing={editShowing} onHide={revertVisibility} onSubmit={refreshTodos} route={route} id={editId} isList={true}/>
             <ListTodos outer="yes" onChange={refreshTodos} todos={todos} id={todoListId} onEdit={changeEditId} route={route} onSelect={onSelect} />
@@ -53,12 +60,3 @@ const ListOfLists = (props) => {
 }
 
 export default ListOfLists;
-
-
-let ScreenHeight = Dimensions.get("window").height;
-
-const styles = StyleSheet.create({
-    long: {
-        height: ScreenHeight
-    }
-})

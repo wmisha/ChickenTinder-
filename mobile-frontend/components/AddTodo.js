@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Searchbar } from 'react-native-paper';
-import { StyleSheet, Dimensions } from 'react-native';
+import { View, KeyboardAvoidingView, StyleSheet, Dimensions } from 'react-native';
 
-import WhichListContext from './WhichListContext';
+import WhichListContext from '../contexts/WhichListContext';
 
 const AddTodo = (props) => {
     const [todoInput, setTodoInput] = useState('');
@@ -16,7 +16,7 @@ const AddTodo = (props) => {
 
     const onSubmit = props.onSubmit || (() => { });
 
-    const _submitTodo = () => {
+    const submitTodo = () => {
 
         fetch(route, {
             method: 'POST',
@@ -29,16 +29,20 @@ const AddTodo = (props) => {
     }
 
     return (
-        <Searchbar
-            style={styles.searchBar}
-            icon="plus"
-            placeholder={ props.outer ? "Add a List" : "Add a Todo" }
-            searchAccessibilityLabel="Form to add a todo item"
-            onChangeText={setTodoInput}
-            onSubmitEditing={_submitTodo} // for enter key
-            onIconPress={_submitTodo} // for pressing the icon
-            value={todoInput}
-        />
+        <KeyboardAvoidingView style={styles.searchBar} behavior='position' >
+            <View style={styles.wrapper}>
+                <Searchbar
+                    icon="plus"
+                    returnKeyType="done"
+                    placeholder={ props.outer ? "Add a List" : "Add a Todo" }
+                    searchAccessibilityLabel="Form to add a todo item"
+                    onChangeText={setTodoInput}
+                    onSubmitEditing={submitTodo} // for enter key
+                    onIconPress={submitTodo} // for pressing the icon
+                    value={todoInput}
+                />
+            </View>
+        </KeyboardAvoidingView>
     )
 
 }
@@ -46,11 +50,15 @@ const AddTodo = (props) => {
 export default AddTodo;
 
 const styles = StyleSheet.create({
+    wrapper: {
+        padding: 24
+    },
+    
     searchBar: {
         position: 'absolute',
-        bottom: 140,
-        left: 30,
-        right: 30,
+        bottom: 100,
+        left: 10,
+        right: 10,
     },
 });
 

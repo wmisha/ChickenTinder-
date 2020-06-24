@@ -7,11 +7,11 @@ import { useNavigation } from '@react-navigation/native';
 
 import TopBar from './TopBar.js';
 import AddTodo from './AddTodo.js';
-import ListTodos from './ListTodos.js';
+import ListTodos from 'ListTodos.js';
 import EditTodo from './EditTodo.js';
 
 
-import ListNameContext from './ListNameContext';
+import ListNameContext from '../contexts/ListNameContext';
 import WhichListContext from './WhichListContext';
 
 const TodoList = (props) => {
@@ -37,6 +37,7 @@ const TodoList = (props) => {
         getTodos().then(todos => setTodos(todos));
     }
 
+    const [height, setHeight] = useState(Dimensions.get("window").height)
 
     const changeEditId = (newEditId) => {
         setEditId(newEditId)
@@ -45,6 +46,10 @@ const TodoList = (props) => {
 
     const revertVisibility = () => {
         setEditShowing(false);
+    }
+
+    const onLayout = (e) =>  {
+        setHeight(Dimensions.get('window').height)
     }
 
     useEffect(() => {
@@ -57,7 +62,7 @@ const TodoList = (props) => {
     }, [todoListId]);
 
     return (
-        <View style={styles.long}>
+        <View style={{height}} onLayout={onLayout}>
             <TopBar todos={todos} />
             <EditTodo id={editId} showing={editShowing} onHide={revertVisibility} onSubmit={refreshTodos} route={route} todoListId={todoListId} />
             <ListTodos onChange={refreshTodos} todos={todos} id={todoListId} onEdit={changeEditId} route={route} onSelect={onSelect} />
@@ -66,11 +71,3 @@ const TodoList = (props) => {
     )
 }
 export default TodoList; 
-
-let ScreenHeight = Dimensions.get("window").height;
-
-const styles = StyleSheet.create({
-    long: {
-        height: ScreenHeight
-    }
-})
