@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button, Dialog, Portal, Searchbar } from 'react-native-paper';
 import { KeyboardAvoidingView, Keyboard } from 'react-native';
-import WhichListContext from './WhichListContext';
-import EditTextContext from './EditTextContext';
+import WhichListContext from '../contexts/WhichListContext';
+import EditTextContext from '../contexts/EditTextContext';
 
 const EditTodo = (props) => {
 

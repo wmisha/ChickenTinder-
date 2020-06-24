@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 import { Appbar } from 'react-native-paper';
 
 import { useNavigation } from '@react-navigation/native';
-import ListNameContext from './ListNameContext';
+import ListNameContext from '../contexts/ListNameContext';
 
 const TopBar = (props) => {
     const [todoListName, setTodoListName] = useContext(ListNameContext);

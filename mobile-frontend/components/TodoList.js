@@ -5,14 +5,14 @@ import { View, Dimensions, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
-import TopBar from './TopBar.js';
-import AddTodo from './AddTodo.js';
-import ListTodos from 'ListTodos.js';
-import EditTodo from './EditTodo.js';
+import TopBar from './TopBar';
+import AddTodo from './AddTodo';
+import ListTodos from './ListTodos';
+import EditTodo from './EditTodo';
 
 
 import ListNameContext from '../contexts/ListNameContext';
-import WhichListContext from './WhichListContext';
+import WhichListContext from '../contexts/WhichListContext';
 
 const TodoList = (props) => {
     const [todos, setTodos] = useState([]);
