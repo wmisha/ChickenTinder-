@@ -1,4 +1,4 @@
-const bodyHasPropValidator = (...propNames) => (req, res, next) => {
+const bodyHasProp = (...propNames) => (req, res, next) => {
 
     const invalid = propNames.filter(propName => !req.body[propName]);
 
@@ -19,6 +19,6 @@ const tryCatchMiddleware = async (req, res, next) => {
 }
 
 module.exports = {
-    bodyHasPropValidator,
+    bodyHasProp,
     tryCatchMiddleware
 }

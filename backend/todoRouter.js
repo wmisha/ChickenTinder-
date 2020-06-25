@@ -5,7 +5,7 @@ router.use(express.json());
 
 const db = require(__dirname + '/models/index.js');
 
-const { bodyHasPropValidator, tryCatchMiddleware } = require('./validators.js');
+const { bodyHasProp, tryCatchMiddleware } = require('./validators.js');
 
 router.use(tryCatchMiddleware);
 
@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
     })
 })
 
-router.post("/", bodyHasPropValidator('name'), async (req, res) => {
+router.post("/", bodyHasProp('name'), async (req, res) => {
     console.log('posting');
     console.log(req.body);
     const name = req.body.name;
@@ -76,7 +76,7 @@ router.get("/:list_id", async ({list}, res) => {
 })
 
 router.put("/:list_id", 
-           bodyHasPropValidator('name'),
+           bodyHasProp('name'),
            async (req, res) => {
 
     const name = req.body.name;
@@ -94,14 +94,14 @@ router.delete("/:list_id", async (req, res) => {
     res.send(item);
 })
 
-router.post("/:list_id/", bodyHasPropValidator('todo'),  (req, res) => {
+router.post("/:list_id/", bodyHasProp('todo'),  (req, res) => {
     db
       .Todo
       .create({todo: req.body.todo, todo_list_id: req.params.list_id })
       .then(result => res.send(result))
 })
 
-router.put("/:list_id/:todo_id", bodyHasPropValidator('todo'), async (req, res) => {
+router.put("/:list_id/:todo_id", bodyHasProp('todo'), async (req, res) => {
     req.todo.set({ todo: req.body.todo });
     req.todo.save();
     res.send(req.todo);
