@@ -5,9 +5,10 @@ router.use(express.json());
 
 const db = require(__dirname + '/models/index.js');
 
-const { bodyHasProp, tryCatchMiddleware } = require('./validators.js');
+const { bodyHasProp, tryCatchMiddleware, authorizeJWT } = require('./middleware.js');
 
 router.use(tryCatchMiddleware);
+router.use(authorizeJWT);
 
 router.get("/", (req, res) => {
     db
