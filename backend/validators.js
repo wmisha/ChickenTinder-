@@ -1,11 +1,13 @@
-const bodyHasPropValidator = (propName) => (req, res, next) => {
-    const prop = req.body[propName];
+const bodyHasPropValidator = (...propNames) => (req, res, next) => {
 
-    if (!prop){
-        res.status.send({error: `No ${propName}!`});
+    const invalid = propNames.filter(propName => !req.body[propName]);
+
+    if (invalid.length > 0){
+        res.status(400).send({ error: `Missing props: [${invalid}]!` });
     } else {
         next();
     }
+
 }
 
 const tryCatchMiddleware = async (req, res, next) => {
