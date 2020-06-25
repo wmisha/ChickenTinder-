@@ -5,10 +5,13 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import ListOfLists from './components/ListOfLists'
 import TodoList from './components/TodoList';
+import RegistrationForm from './components/RegistrationForm';
+import LoginForm from './components/LoginForm';
 
 import WhichListContext from './contexts/WhichListContext'
 import ListNameContext from './contexts/ListNameContext';
 import EditTextContext from './contexts/EditTextContext';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +34,8 @@ const App = () => {
         <WhichListContext.Provider value={[todoListId, setTodoListId]}>
           <NavigationContainer>
             <Drawer.Navigator edgeWidth={0}>
+              <Drawer.Screen name="Login" component={LoginForm} />
+              <Drawer.Screen name="Register" component={RegistrationForm} />
               <Drawer.Screen name="Secondary">
                 {props => <ListOfLists {...props} route='http://localhost:5000/todos/' onSelect={onSelect} id={todoListId} initialParams={{ id: todoListId }} />}
               </Drawer.Screen>

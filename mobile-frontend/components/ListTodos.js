@@ -38,14 +38,14 @@ const ListTodos = (props) => {
     }
 
     useEffect(() => {
-        if (props.todos && props.todos.sort !== undefined){
+        if (props.todos.sort !== undefined){
             setTodos(props.todos.sort((a, b) => a.id - b.id))
         }
+    }, [props.todos])
 
-        if (props.todoListId){
-            setTodoListId(props.todoListId)
-        }
-    })
+    useEffect(() => {
+        setTodoListId(props.todoListId);
+    }, [props.todoListId])
     
     const todoRender = todos.map((todo) => {
         return (

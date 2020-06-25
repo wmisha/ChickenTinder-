@@ -6,8 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const OuterTopBar = () => {
+    const navigation = useNavigation();
+
     return (
         <Appbar.Header style={styles.topBar}>
+            <Appbar.Action color="white" icon="door-open" onPress={() => navigation.navigate('Login')} />
+
             <Appbar.Content
                 color="white"
                 style={styles.textPart}
