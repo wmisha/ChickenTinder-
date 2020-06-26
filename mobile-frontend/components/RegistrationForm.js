@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { KeyboardAvoidingView, Text, StyleSheet, ImageBackground } from 'react-native';
+import { KeyboardAvoidingView, Text, StyleSheet, ImageBackground, Keyboard, Platform } from 'react-native';
 
 import { TextInput, Button, Banner, Snackbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -79,14 +79,14 @@ const RegistrationForm = (props) => {
             
             >
             </Banner>
-            <Snackbar
-                style={{textAlign: 'center'}}
-                visible={visible}
-                onDismiss={ () => setVisible(false) }
-            >
-            { `${errorMessage}` }
-            </Snackbar>
             <KeyboardAvoidingView style={styles.view} behavior={Platform.OS == "ios" ? "padding" : "height"}>
+                <Snackbar
+                    style={{marginBottom: 700}}
+                    visible={visible}
+                    onDismiss={() => setVisible(false)}
+                >
+                    {`${errorMessage}`}
+                </Snackbar>
                 <Text style={{ height: 100 }} />
 
                 <TextInput
@@ -111,6 +111,9 @@ const RegistrationForm = (props) => {
                     onChangeText={text => setPassword(text)}
                     textContentType="newPassword"
                     value={password}
+
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => Keyboard.dismiss()}
                 />
 
                 <TextInput
@@ -125,10 +128,12 @@ const RegistrationForm = (props) => {
                     style={{ height: 40, width: 300, marginBottom: 15 }}
                     onChangeText={text => setConfirmPassword(text)}
                     textContentType="newPassword"
-
                     value={ confirmPassword }
+
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => Keyboard.dismiss()}
                 />
-                <Button mode='contained' onPress={signup}>Register!</Button>
+                <Button mode='contained' onPress={() => { Keyboard.dismiss(); signup() }}>Register!</Button>
 
             </KeyboardAvoidingView>
         </ImageBackground>

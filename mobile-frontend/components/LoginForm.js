@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { KeyboardAvoidingView, Text, StyleSheet, ImageBackground } from 'react-native';
+import { KeyboardAvoidingView, Text, StyleSheet, ImageBackground, Platform } from 'react-native';
 
 import { TextInput, Button, Banner, Card } from 'react-native-paper';
 
