@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { KeyboardAvoidingView, Text, StyleSheet, ImageBackground } from 'react-native';
 
-import { TextInput, Button, Banner, Card } from 'react-native-paper';
+import { TextInput, Button, Banner, Snackbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 
 const RegistrationForm = (props) => {
 
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [confirmPassword, setConfirmPassword] = React.useState('');
-    const [visible, setVisible] = React.useState(true);
+    const route = `http://localhost:5000/auth/register`
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [visible, setVisible] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('Error creating account!');
 
     const navigation = useNavigation();
 
@@ -19,11 +22,49 @@ const RegistrationForm = (props) => {
 
     const image = { uri: "https://i.pinimg.com/564x/71/41/19/7141190ca7bde7c9d17775a34de717d7.jpg" };
 
+    const signup = () => {
+        if (!username || !password || !confirmPassword){
+            setErrorMessage('Please fill out all fields before submitting!')
+            setVisible(true)
+        } else if (password !== confirmPassword){
+            setErrorMessage('Password must equal confirmation password!')
+            setVisible(true)
+        } else if (username.length < 3){
+            setErrorMessage('Username must be at least 3 characters')
+            setVisible(true)
+        } else if (password.length < 3){
+            setErrorMessage('Password must be at least 3 characters')
+            setVisible(true)
+        } else {
+            fetch(route, {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password, confirmPassword })
+            })
+            .then(data => data.json())
+            .then(data => {
+                if (data.error){
+                    throw data.error;
+                }
+                return data;
+            })
+            .then(data => {
+                clearInputs();
+                navigation.navigate('Login')
+            })
+            .catch(err => {
+                clearInputs();
+                setErrorMessage(err)
+                setVisible(true)
+            })
+        }
+    }
+
     return (
         <ImageBackground source={image} style={styles.image}>
 
             <Banner
-                visible={visible}
+                visible={true}
                 contentStyle={{backgroundColor: 'pink', textAlign: 'bottom'}}
                 actions={[
                     {
@@ -38,12 +79,20 @@ const RegistrationForm = (props) => {
             
             >
             </Banner>
+            <Snackbar
+                style={{textAlign: 'center'}}
+                visible={visible}
+                onDismiss={ () => setVisible(false) }
+            >
+            { `${errorMessage}` }
+            </Snackbar>
             <KeyboardAvoidingView style={styles.view} behavior={Platform.OS == "ios" ? "padding" : "height"}>
                 <Text style={{ height: 100 }} />
 
                 <TextInput
                     label="username"
                     mode='outlined'
+                    autoCapitalize='none'
                     style={{ height: 40, width: 300, textAlign: 'center' }}
                     placeholder="Username"
                     onChangeText={text => setUsername(text)}
@@ -53,6 +102,7 @@ const RegistrationForm = (props) => {
                 <TextInput
                     label="password"
                     mode='outlined'
+                    autoCapitalize='none'
 
                     secureTextEntry={true}
                     autoCorrect={false}
@@ -66,6 +116,8 @@ const RegistrationForm = (props) => {
                 <TextInput
                     label="confirm password"
                     mode='outlined'
+                    autoCapitalize='none'
+
                     secureTextEntry={true}
                     autoCorrect={false}
 
@@ -74,9 +126,9 @@ const RegistrationForm = (props) => {
                     onChangeText={text => setConfirmPassword(text)}
                     textContentType="newPassword"
 
-                    value={confirmPassword}
+                    value={ confirmPassword }
                 />
-                <Button mode='contained' onPress={clearInputs}>Register!</Button>
+                <Button mode='contained' onPress={signup}>Register!</Button>
 
             </KeyboardAvoidingView>
         </ImageBackground>

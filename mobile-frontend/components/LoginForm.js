@@ -42,6 +42,7 @@ const LoginForm = (props) => {
                 <TextInput
                     label="username"
                     mode='outlined'
+                    autoCapitalize='none'
                     style={{ height: 40, width: 300, textAlign: 'center' }}
                     placeholder="Username"
                     onChangeText={text => setUsername(text)}
@@ -52,6 +53,7 @@ const LoginForm = (props) => {
                     label="password"
                     mode='outlined'
 
+                    autoCapitalize='none'
                     secureTextEntry={true}
                     autoCorrect={false}
                     placeholder="Password"
