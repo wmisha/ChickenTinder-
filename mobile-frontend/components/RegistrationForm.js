@@ -13,7 +13,7 @@ const RegistrationForm = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState('Error creating account!');
 
     const navigation = useNavigation();
@@ -48,7 +48,7 @@ const RegistrationForm = (props) => {
                 }
                 return data;
             })
-            .then(data => {
+            .then(() => {
                 clearInputs();
                 navigation.navigate('Login')
             })
@@ -81,7 +81,6 @@ const RegistrationForm = (props) => {
             </Banner>
             <KeyboardAvoidingView style={styles.view} behavior={Platform.OS == "ios" ? "padding" : "height"}>
                 <Snackbar
-                    style={{marginBottom: 700}}
                     visible={visible}
                     onDismiss={() => setVisible(false)}
                 >
