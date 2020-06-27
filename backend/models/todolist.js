@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER,
     name: DataTypes.STRING
   }, {});
+  
   TodoList.associate = function(models) {
       TodoList.belongsTo(models.User, {
           foreignKey: 'user_id',

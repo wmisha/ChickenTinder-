@@ -31,6 +31,10 @@ const EditTodo = (props) => {
     }, [todoListId, id, route]);
 
     useEffect(() => {
+        setAccount(props.account)
+    }, [props.account])
+    
+    useEffect(() => {
         setId(props.id)
     }, [props.id])
 

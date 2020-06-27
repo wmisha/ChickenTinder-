@@ -17,9 +17,7 @@ const ListOfLists = (props) => {
     const [height, setHeight] = useState(Dimensions.get("window").height)
     const [account, setAccount] = useState(props.account || 'cat');
 
-    useEffect(() => {
-        setAccount(props.account)
-    }, [props.account])
+
 
 
 
@@ -40,7 +38,14 @@ const ListOfLists = (props) => {
         getTodos().then(todos => setTodos(todos));
     }
 
+    useEffect(() => {
+        setAccount(props.account)
+    }, [props.account])
 
+    useEffect(() => {
+        refreshTodos()
+    }, [account])
+    
     const changeEditId = (newEditId) => {
         setEditId(newEditId)
         setEditShowing(true);

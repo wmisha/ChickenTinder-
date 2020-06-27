@@ -33,6 +33,10 @@ const TodoList = (props) => {
         setAccount(props.account)
     }, [props.account])
 
+    useEffect(() => {
+        refreshTodos()
+    }, [account])
+    
     const getTodos = async () => {
 
         const response = await fetch(`${route}${todoListId}`, {
