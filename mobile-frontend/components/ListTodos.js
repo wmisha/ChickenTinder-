@@ -11,23 +11,21 @@ import EditTextContext from '../contexts/EditTextContext';
 const ListTodos = (props) => {
 
     const [todos, setTodos] = useState(props.todos.sort && props.todos.sort((a, b) => a.id - b.id));
-    const [todoListId, setTodoListId] = useContext(WhichListContext)
     const [editText, setEditText] = useContext(EditTextContext);
     const [todoListName, setTodoListName] = useContext(ListNameContext);
     const onChange = props.onChange || (() => { })
     const onEdit = props.onEdit || (() => { })
-    const [account, setAccount] = useState(props.account || '');
     const route = props.route || `http://localhost:5000/todos/`
     const navigation = useNavigation();
     let scrollView;
 
     const onSelect = props.onSelect ? (id) => { props.onSelect(id).then(() => navigation.navigate('Primary'))} : (() => { })
 
-    const deleteTodo = (id) => {
-        const location = props.outer === "yes" ? `${route}${id}` : `${route}${todoListId}/${id}`
+    const deleteTodo = (itemId) => {
+        const location = props.outer === "yes" ? `${route}${id}` : `${route}${props.id}/${itemId}`
         fetch(location, {
             method: 'DELETE',
-            headers: { "Authorization": `Bearer ${account}` }
+            headers: { "Authorization": `Bearer ${props.account}` }
         }).then(() => {
             onChange();
         })
@@ -35,18 +33,10 @@ const ListTodos = (props) => {
     }
 
     useEffect(() => {
-        setAccount(props.account)
-    }, [props.account])
-
-    useEffect(() => {
         if (props.todos.sort !== undefined){
             setTodos(props.todos.sort((a, b) => a.id - b.id))
         }
     }, [props.todos])
-
-    useEffect(() => {
-        setTodoListId(props.todoListId);
-    }, [props.todoListId])
     
     const todoRender = todos.map((todo) => {
         return (

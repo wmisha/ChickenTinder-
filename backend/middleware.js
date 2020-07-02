@@ -24,7 +24,9 @@ const authorizeJWT = (req, res, next) => {
             // we'll verify the jwt synchronously for now,
             // but you could have a jwt.verify(token, secret, (err, decoded) => {})
             // callback instead
-            const decoded = jwt.verify(token, SECRET)
+            const decoded = jwt.verify(token, SECRET, {
+                algorithms: ['HS256']
+            })
             req.user_id = decoded.id;
             req.username = decoded.username;
             next()

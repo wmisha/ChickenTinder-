@@ -51,7 +51,11 @@ router.post("/login", bodyHasProp('username', 'password'), async (req, res) => {
     } else if (generatePwdHash(password, user.salt) !== user.pwd_hash){
         res.status(400).send({ error: "Incorrect password!"});
     } else {
-        const accessToken = jwt.sign({username, id: user.id }, SECRET);
+        const accessToken = jwt.sign(
+            { username, id: user.id },
+            SECRET,
+            { algorithm: 'HS256' }
+        );
         res.send({accessToken})
     }
 })
@@ -72,7 +76,7 @@ router.post("/register", bodyHasProp('username', 'password', 'confirmPassword'),
         const salt = chance.string({length: 24})
         const pwd_hash = generatePwdHash(password, salt);
 
-        const newUser = await db.User.create({ username, pwd_hash, salt});
+        const newUser = await db.User.create({ username, pwd_hash, salt });
         res.send(newUser);
     }
 
