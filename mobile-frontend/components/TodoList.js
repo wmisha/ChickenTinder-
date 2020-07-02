@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { View, Dimensions, StyleSheet, Button } from 'react-native';
+import { View, Dimensions, StyleSheet, Button, AsyncStorage } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,21 +13,35 @@ import EditTodo from './EditTodo';
 
 import ListNameContext from '../contexts/ListNameContext';
 import WhichListContext from '../contexts/WhichListContext';
+import AccountContext from '../contexts/AccountContext';
 
 const TodoList = (props) => {
     const [todos, setTodos] = useState([]);
     const [editId, setEditId] = useState(0);
     const [editShowing, setEditShowing] = useState(false);
+    const [account, setAccount] = useContext(AccountContext)
 
     const navigation = useNavigation();
     const [todoListId, setTodoListId] = useContext(WhichListContext);
+
 
     const route = `http://localhost:5000/todos/`
 
     const onSelect = props.onSelect || (async () => { })
 
+    useEffect(() => {
+        setAccount(props.account)
+    }, [props.account])
+
+    useEffect(() => {
+        refreshTodos()
+    }, [account])
+    
     const getTodos = async () => {
-        const response = await fetch(`${route}${todoListId}`);
+
+        const response = await fetch(`${route}${todoListId}`, {
+            headers: { "Authorization": `Bearer ${account}`}
+        });
         const todos = await response.json();
 
         return todos;
@@ -64,9 +78,9 @@ const TodoList = (props) => {
     return (
         <View style={{height}} onLayout={onLayout}>
             <TopBar todos={todos} />
-            <EditTodo id={editId} showing={editShowing} onHide={revertVisibility} onSubmit={refreshTodos} route={route} todoListId={todoListId} />
-            <ListTodos onChange={refreshTodos} todos={todos} id={todoListId} onEdit={changeEditId} route={route} onSelect={onSelect} />
-            <AddTodo onSubmit={refreshTodos} route={route} specific={true} />
+            <EditTodo id={editId} showing={editShowing} onHide={revertVisibility} onSubmit={refreshTodos} route={route} todoListId={todoListId} account={account}/>
+            <ListTodos onChange={refreshTodos} todos={todos} id={todoListId} onEdit={changeEditId} route={route} onSelect={onSelect} account={account}/>
+            <AddTodo onSubmit={refreshTodos} route={route} specific={true} account={account} />
         </View>
     )
 }

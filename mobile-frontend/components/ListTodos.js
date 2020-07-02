@@ -11,26 +11,21 @@ import EditTextContext from '../contexts/EditTextContext';
 const ListTodos = (props) => {
 
     const [todos, setTodos] = useState(props.todos.sort && props.todos.sort((a, b) => a.id - b.id));
-    const [todoListId, setTodoListId] = useContext(WhichListContext)
-
     const [editText, setEditText] = useContext(EditTextContext);
-
     const [todoListName, setTodoListName] = useContext(ListNameContext);
     const onChange = props.onChange || (() => { })
     const onEdit = props.onEdit || (() => { })
-
     const route = props.route || `http://localhost:5000/todos/`
-
     const navigation = useNavigation();
-
     let scrollView;
 
     const onSelect = props.onSelect ? (id) => { props.onSelect(id).then(() => navigation.navigate('Primary'))} : (() => { })
 
-    const deleteTodo = (id) => {
-        const location = props.outer === "yes" ? `${route}${id}` : `${route}${todoListId}/${id}`
+    const deleteTodo = (itemId) => {
+        const location = props.outer === "yes" ? `${route}${id}` : `${route}${props.id}/${itemId}`
         fetch(location, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: { "Authorization": `Bearer ${props.account}` }
         }).then(() => {
             onChange();
         })
@@ -38,14 +33,10 @@ const ListTodos = (props) => {
     }
 
     useEffect(() => {
-        if (props.todos && props.todos.sort !== undefined){
+        if (props.todos.sort !== undefined){
             setTodos(props.todos.sort((a, b) => a.id - b.id))
         }
-
-        if (props.todoListId){
-            setTodoListId(props.todoListId)
-        }
-    })
+    }, [props.todos])
     
     const todoRender = todos.map((todo) => {
         return (

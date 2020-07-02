@@ -5,10 +5,14 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import ListOfLists from './components/ListOfLists'
 import TodoList from './components/TodoList';
+import RegistrationForm from './components/RegistrationForm';
+import LoginForm from './components/LoginForm';
 
 import WhichListContext from './contexts/WhichListContext'
 import ListNameContext from './contexts/ListNameContext';
 import EditTextContext from './contexts/EditTextContext';
+import AccountContext from './contexts/AccountContext';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -16,7 +20,15 @@ const App = () => {
   const [todoListId, setTodoListId] = useState(8);
   const [todoListName, setTodoListName] = useState('hmm');
 
+  const [account, setAccount] = useState('bubbles');
   const [editTextName, setEditTextName] = useState('Update');
+
+  const liftAccount = async (newAccount) => {
+    if (newAccount){
+      await setAccount(newAccount)
+    }
+  }
+
   const onSelect = async (id) => {
 
     //alert(`inside onselect, switching to ${id}`)
@@ -26,23 +38,29 @@ const App = () => {
   }
 
    return (
-     <EditTextContext.Provider value={[editTextName, setEditTextName]}>
-      <ListNameContext.Provider value={[todoListName, setTodoListName]}>
-        <WhichListContext.Provider value={[todoListId, setTodoListId]}>
-          <NavigationContainer>
-            <Drawer.Navigator edgeWidth={0}>
-              <Drawer.Screen name="Secondary">
-                {props => <ListOfLists {...props} route='http://localhost:5000/todos/' onSelect={onSelect} id={todoListId} initialParams={{ id: todoListId }} />}
-              </Drawer.Screen>
-              <Drawer.Screen name="Primary">
-                {props => <TodoList {...props} id={todoListId} />}
-              </Drawer.Screen>
+     <AccountContext.Provider value={[account, setAccount]}>
+      <EditTextContext.Provider value={[editTextName, setEditTextName]}>
+        <ListNameContext.Provider value={[todoListName, setTodoListName]}>
+          <WhichListContext.Provider value={[todoListId, setTodoListId]}>
+            <NavigationContainer>
+              <Drawer.Navigator edgeWidth={0}>
+                <Drawer.Screen name="Login">
+                  { props => <LoginForm {...props} route='http://localhost:5000/login/' liftAccount={liftAccount} /> }
+                </Drawer.Screen>
+                <Drawer.Screen name="Register" component={RegistrationForm} />
+                <Drawer.Screen name="Secondary">
+                  {props => <ListOfLists {...props} route='http://localhost:5000/todos/' onSelect={onSelect} id={todoListId} account={account} />}
+                </Drawer.Screen>
+                <Drawer.Screen name="Primary">
+                  {props => <TodoList {...props} id={todoListId} account={account} />}
+                </Drawer.Screen>
 
-            </Drawer.Navigator>
-          </NavigationContainer>
-          </WhichListContext.Provider>
-        </ListNameContext.Provider>
-       </EditTextContext.Provider>
+              </Drawer.Navigator>
+            </NavigationContainer>
+            </WhichListContext.Provider>
+          </ListNameContext.Provider>
+        </EditTextContext.Provider>
+     </AccountContext.Provider>
     )
 } 
 

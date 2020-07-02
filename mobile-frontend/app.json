@@ -2,8 +2,9 @@
   "name": "mobile-frontend",
   "displayName": "mobile-frontend",
   "expo": {
-    "name": "mobile-frontend",
+    "name": "mobile-frontend-test",
     "slug": "expo-template-bare",
+    "sdkVersion": "38.0.0",
     "version": "1.0.0",
     "platforms": [
       "ios",
@@ -12,6 +13,7 @@
     ],
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "description": ""
   }
 }

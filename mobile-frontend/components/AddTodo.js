@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Searchbar } from 'react-native-paper';
-import { View, KeyboardAvoidingView, StyleSheet, Dimensions } from 'react-native';
+import { View, KeyboardAvoidingView, StyleSheet, Text } from 'react-native';
 
 import WhichListContext from '../contexts/WhichListContext';
+import AccountContext from '../contexts/AccountContext';
 
 const AddTodo = (props) => {
     const [todoInput, setTodoInput] = useState('');
@@ -13,14 +14,23 @@ const AddTodo = (props) => {
     if (props.specific === true){
         route = `${route}${todoListId}`;
     }
+    
+    const [account, setAccount] = useState(props.account || 'cat');
 
     const onSubmit = props.onSubmit || (() => { });
+
+    useEffect(() => {
+        setAccount(props.account)
+    }, [props.account])
 
     const submitTodo = () => {
 
         fetch(route, {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${account}`
+            },
             body: JSON.stringify({ todo: todoInput, name: todoInput })
         }).then(() => {
             setTodoInput('')

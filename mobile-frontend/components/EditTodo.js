@@ -16,7 +16,7 @@ const EditTodo = (props) => {
     const [todoListId, setTodoListId] = useContext(WhichListContext);
     const [isList, setIsList] = useState(props.isList || false);
     const [id, setId] = useState(props.id)
-
+    const [account, setAccount] = useState(props.account || '')
 
     const [todoInput, setTodoInput] = useState(editText);
 
@@ -30,6 +30,10 @@ const EditTodo = (props) => {
         const fullRoute = todoListId ? `${route}${todoListId}/${id}` : `${route}${id}`;
     }, [todoListId, id, route]);
 
+    useEffect(() => {
+        setAccount(props.account)
+    }, [props.account])
+    
     useEffect(() => {
         setId(props.id)
     }, [props.id])
@@ -49,7 +53,7 @@ const EditTodo = (props) => {
     const submitTodo = () => {
         fetch(fullRoute, {
             method: 'PUT',
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${account}` },
             body: JSON.stringify({ todo: todoInput, name: todoInput })
         }).then(() => {
             onSubmit();
