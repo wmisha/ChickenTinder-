@@ -6,11 +6,15 @@ module.exports = (sequelize, DataTypes) => {
     salt: DataTypes.STRING
   }, {});
 
-  User.associate = function(models) {
+  User.associate = function (models) {
     User.hasMany(models.TodoList, {
       foreignKey: 'user_id',
       as: 'todoLists'
-    })
+    });
+    User.hasMany(models.UserGroup, {
+      foreignKey: 'user_id',
+      as: 'groups'
+    });
 
   };
   return User;
