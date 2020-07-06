@@ -11,10 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'user_id',
       as: 'todoLists'
     });
-    User.hasMany(models.UserGroup, {
-      foreignKey: 'user_id',
-      as: 'groups'
+    
+    User.belongsToMany(models.Group, {
+      through: models.UserGroup,
+      foreignKey: 'user_id'
     });
+
+    User.hasMany(models.RestaurantVote, {
+      foreignKey: 'user_id'
+    })
 
   };
   return User;

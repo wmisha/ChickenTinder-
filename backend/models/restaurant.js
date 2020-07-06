@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Restaurant.belongsToMany(models.Group, {
+        through: models.RestaurantGroup,
+        foreignKey: 'restaurant_id'
+      })
+
+      Restaurant.hasMany(models.RestaurantVote, {
+        foreignKey: 'restaurant_id'
+      })
       // define association here
     }
   };
