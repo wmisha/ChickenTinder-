@@ -3,7 +3,6 @@ const router = express.Router();
 const { API_KEY }  = require('./secret_data')
 
 const axios = require('axios').default
-// const queryString = require('query-string')
 const endPoint = "http://api.yelp.com/v3/businesses/search"
 const { map, pick } = require('ramda');
 const generateJoinCode = require('./generateJoinCode')
@@ -49,13 +48,4 @@ router.post("/", bodyHasProp('group_name', 'location'), async (req, res) => {
 
 })
 
-// const request = `${endPoint}?${queryString.stringify(arguments)}` 
-// axios.get(request, {
-//     headers: {
-//         authorization: `Bearer ${API_KEY}`
-//     }
-// })
-// .then(response => response.data.businesses)
-// .then(console.log)
-// .catch(error => {});
 module.exports = router;
