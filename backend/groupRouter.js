@@ -31,6 +31,10 @@ router.post("/", bodyHasProp('group_name', 'location'), async (req, res) => {
         parameters.term = req.body.term;
     }
 
+    if(req.body.limit){
+        parameters.limit = req.body.limit;
+    }
+
     try {
         const group = await db.Group.create({
             group_name,
