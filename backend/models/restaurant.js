@@ -26,10 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     rating: DataTypes.INTEGER,
     location: DataTypes.STRING,
     price: DataTypes.INTEGER,
-    distance: DataTypes.INTEGER,
-    vegetarian: DataTypes.BOOLEAN,
-    weelchair: DataTypes.BOOLEAN,
-    cuisine: DataTypes.STRING
+    distance: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Restaurant',
