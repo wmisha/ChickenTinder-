@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   User.associate = function (models) {
+
     User.hasMany(models.TodoList, {
       foreignKey: 'user_id',
       as: 'todoLists'
     });
-    
     User.belongsToMany(models.Group, {
       through: models.UserGroup,
       foreignKey: 'user_id'

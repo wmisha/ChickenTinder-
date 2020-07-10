@@ -8,7 +8,7 @@ describe("The UserGroup Association", () => {
         await user.addGroup(group);
 
         const userWithGroupData = await db.User.findOne({
-            where: {id: user.id},
+            where: { id: user.id },
             include: db.Group
         })
 
@@ -17,7 +17,7 @@ describe("The UserGroup Association", () => {
         ).toContain(group.id)
     })
 
-    it ("can add a user to the Group's Users", async () => {
+    it("can add a user to the Group's Users", async () => {
         const user = await db.User.findOne();
         const group = await db.Group.findOne();
 
@@ -33,7 +33,7 @@ describe("The UserGroup Association", () => {
         ).toContain(group.id)
     })
 
-    it (`can view a user as one of the user's group's users"`, async () => {
+    it(`can view a user as one of the user's group's users"`, async () => {
         const user = await db.User.findOne();
         const group = await db.Group.findOne();
 
@@ -52,7 +52,7 @@ describe("The UserGroup Association", () => {
 })
 
 describe('The RestaurantGroup Association', () => {
-    it ('Can add a restaurant to a group', async () => {
+    it('Can add a restaurant to a group', async () => {
         const restaurant = await db.Restaurant.findOne();
         const group = await db.Group.findOne();
 
@@ -72,7 +72,7 @@ describe('The RestaurantGroup Association', () => {
         const restaurant = await db.Restaurant.findOne();
         const group = await db.Group.findOne();
 
-        await group.addRestaurant(restaurant);
+        await restaurant.addGroup(group);
 
         const restaurantWithGroupData = await db.Restaurant.findOne({
             where: { id: restaurant.id },
@@ -86,7 +86,7 @@ describe('The RestaurantGroup Association', () => {
 })
 
 describe('The RestaurantVote Association', () => {
-    it ('has a user vote for a restaurant', async () => {
+    it('has a user vote for a restaurant', async () => {
         const user = await db.User.findOne();
         const restaurant = await db.Restaurant.findOne();
 
