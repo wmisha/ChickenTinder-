@@ -1,67 +1,39 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import ListOfLists from './components/ListOfLists'
-import TodoList from './components/TodoList';
 import RegistrationForm from './components/RegistrationForm';
 import LoginForm from './components/LoginForm';
+import CreateGroup from './components/CreateGroup';
+import JoinGroup from './components/JoinGroup';
+import ViewResults from './components/ViewResults';
+import SwipeRestaurants from './components/SwipeRestaurants';
 
-import WhichListContext from './contexts/WhichListContext'
-import ListNameContext from './contexts/ListNameContext';
-import EditTextContext from './contexts/EditTextContext';
-import AccountContext from './contexts/AccountContext';
-
+import reducer from './reducers'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 const Drawer = createDrawerNavigator();
+const store = createStore(reducer);
+
+store.subscribe(() => console.log(store.getState()));
 
 const App = () => {
-  const [todoListId, setTodoListId] = useState(8);
-  const [todoListName, setTodoListName] = useState('hmm');
-
-  const [account, setAccount] = useState('bubbles');
-  const [editTextName, setEditTextName] = useState('Update');
-
-  const liftAccount = async (newAccount) => {
-    if (newAccount){
-      await setAccount(newAccount)
-    }
-  }
-
-  const onSelect = async (id) => {
-
-    //alert(`inside onselect, switching to ${id}`)
-    if (id) {
-      await setTodoListId(id);
-    }
-  }
-
    return (
-     <AccountContext.Provider value={[account, setAccount]}>
-      <EditTextContext.Provider value={[editTextName, setEditTextName]}>
-        <ListNameContext.Provider value={[todoListName, setTodoListName]}>
-          <WhichListContext.Provider value={[todoListId, setTodoListId]}>
-            <NavigationContainer>
-              <Drawer.Navigator edgeWidth={0}>
-                <Drawer.Screen name="Login">
-                  { props => <LoginForm {...props} route='http://localhost:5000/login/' liftAccount={liftAccount} /> }
-                </Drawer.Screen>
-                <Drawer.Screen name="Register" component={RegistrationForm} />
-                <Drawer.Screen name="Secondary">
-                  {props => <ListOfLists {...props} route='http://localhost:5000/todos/' onSelect={onSelect} id={todoListId} account={account} />}
-                </Drawer.Screen>
-                <Drawer.Screen name="Primary">
-                  {props => <TodoList {...props} id={todoListId} account={account} />}
-                </Drawer.Screen>
-
-              </Drawer.Navigator>
-            </NavigationContainer>
-            </WhichListContext.Provider>
-          </ListNameContext.Provider>
-        </EditTextContext.Provider>
-     </AccountContext.Provider>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Drawer.Navigator edgeWidth={0}>
+          <Drawer.Screen name="Login" component={LoginForm} />
+          <Drawer.Screen name="Register" component={RegistrationForm} />
+          <Drawer.Screen name="Create"component={CreateGroup} />
+          <Drawer.Screen name="Join" component={JoinGroup} />
+          <Drawer.Screen name="Results" component={ViewResults} />
+          <Drawer.Screen name="Swipe" component={SwipeRestaurants} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </Provider>
     )
-} 
+}
 
 export default App;
