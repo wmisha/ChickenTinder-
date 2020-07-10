@@ -52,4 +52,27 @@ router.post("/", bodyHasProp('group_name', 'location'), async (req, res) => {
 
 })
 
+router.get("/:group_id", async (req, res) => {
+    res.send(req.groupList);
+})
+
+router.param('group_id', async (req, res, next, id) => {
+    id = parseInt(id)
+
+    if (!id) {
+        res.status(400).send({ error: "No id in params!" });
+    } else {
+        const groupExists = await db.Group.findOne({where: {id}})
+        const result = await db.Restaurant.findAll({where: {group_id: id}});
+
+        if (!groupExists) {
+            res.status(400).send({ error: "id not found in db!" });
+        } else {
+            req.groupObject = groupExists;
+            req.groupList = result;
+            next();
+        }
+    }
+})
+
 module.exports = router;

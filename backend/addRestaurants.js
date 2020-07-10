@@ -15,11 +15,16 @@ function addRestaurants(group_id, query){
     }).then(result => result.data.businesses)
       .then(businesses => {
           businesses.forEach(business => {
+              console.log(business.location.city);
+              console.log(business.distance);
               db.Restaurant.create({
                   group_id,
                   name: business.name,
+                  rating: business.rating,
                   price: business.price ? business.price.length : 0,
-                  location: business.location.city || 'Unknown'
+                  location: business.location.city || 'Unknown',
+                  distance: business.distance || 'Unknown'
+
               }).then(() => {
                   console.log(`Added ${business.name} to the db for group ${group_id}`)
               }).catch(err => console.error(err.message))
