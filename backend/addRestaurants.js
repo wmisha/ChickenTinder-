@@ -23,7 +23,7 @@ function addRestaurants(group_id, query){
                   rating: business.rating,
                   price: business.price ? business.price.length : 0,
                   location: business.location.city || 'Unknown',
-                  distance: business.distance || 'Unknown'
+                  distance: business.distance || 0.0
 
               }).then(() => {
                   console.log(`Added ${business.name} to the db for group ${group_id}`)
