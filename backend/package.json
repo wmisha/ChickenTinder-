@@ -26,7 +26,7 @@
   },
   "scripts": {
     "dev": "yarn nodemon index.js",
-    "test": "jest --verbose"
+    "test": "yarn jest --verbose"
   },
   "devDependencies": {
     "jest": "^26.1.0"
