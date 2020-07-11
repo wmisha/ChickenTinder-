@@ -7,9 +7,7 @@ router.use(express.json());
 console.log(__dirname);
 const db = require('../models/index.js');
 
-const { bodyHasProp, tryCatchMiddleware, authorizeJWT } = require('../middleware.js');
-
-const group = require('../models/group');
+const { tryCatchMiddleware, authorizeJWT } = require('../middleware.js');
 
 router.use(tryCatchMiddleware);
 router.use(authorizeJWT);
@@ -20,7 +18,6 @@ router.use(authorizeJWT);
 router.get("/", async (req, res) => {
     const user_id = req.user_id;
     const results = await db.UserGroup.findAll({ where: { user_id: user_id } });
-    console.log(results);
     if (results.length === 0) {
         res.send("You haven't join any group yet!");
     } else {
@@ -31,15 +28,14 @@ router.get("/", async (req, res) => {
                     [Op.in]: results.map(results => results.group_id)
                 }
             }
-        }).then(results => res.send(results))
+        }).then(results => res.send(results));
+        console.log(results);
     }
 
 
 })
 
 // Route to a user join a group
-// my qustion is should deal with group invite code? what is the request parameters.
-
 router.post("/:join_code", async (req, res) => {
     const { join_code } = req.params;
     const user_id = req.user_id;
@@ -49,15 +45,12 @@ router.post("/:join_code", async (req, res) => {
         user_id,
         group_id: group.id
     })
-        .then(result => res.send(result)) // copy from you not sure it works???
+        .then(result => res.send(result))
         .catch(err => console.log(err));
-
-
 })
 
 
-// Route to leave a group;
-
+// Router for allowing a user to leave a group;
 router.delete("/:group_id", async (req, res) => {
     const group_id = req.params.group_id;
     const user_id = req.user_id;
