@@ -17,10 +17,10 @@ router.use(authorizeJWT);
 
 
 // Route to see all groups that a user is in.
-router.get("/:user_id", async (req, res) => {
-    const user_id = req.params.user_id;
+router.get("/", async (req, res) => {
+    const user_id = req.user_id;
     const results = await db.UserGroup.findAll({ where: { user_id: user_id } });
-    //console.log(results);
+    console.log(results);
     if (results.length === 0) {
         res.send("You haven't join any group yet!");
     } else {
