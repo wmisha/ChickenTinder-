@@ -23,7 +23,7 @@ const { bodyHasProp, tryCatchMiddleware } = require(__dirname + '/middleware.js'
 
 router.use(tryCatchMiddleware);
 
-function generatePwdHash(password, salt){
+function generatePwdHash(password, salt) {
     const hash = crypto.createHash('sha256');
 
     hash.update(`${password}${salt}`);
@@ -44,19 +44,19 @@ router.post("/login", bodyHasProp('username', 'password'), async (req, res) => {
     //         make a JWT lkjlksdjflkdsj.sldkjfslkdjdslkfj.lsdkjfslkfj
     const { username, password } = req.body;
 
-    const user = await db.User.findOne({where: {username}});
+    const user = await db.User.findOne({ where: { username } });
 
-    if (!user){
-        res.status(400).send({ error: "User not found!"});
-    } else if (generatePwdHash(password, user.salt) !== user.pwd_hash){
-        res.status(400).send({ error: "Incorrect password!"});
+    if (!user) {
+        res.status(400).send({ error: "User not found!" });
+    } else if (generatePwdHash(password, user.salt) !== user.pwd_hash) {
+        res.status(400).send({ error: "Incorrect password!" });
     } else {
         const accessToken = jwt.sign(
             { username, id: user.id },
             SECRET,
             { algorithm: 'HS256' }
         );
-        res.send({accessToken})
+        res.send({ accessToken })
     }
 })
 
@@ -66,14 +66,15 @@ router.post("/register", bodyHasProp('username', 'password', 'confirmPassword'),
     // otherwise, store username: username, salt: N, pwd_hash: H<password || salt> in the table
     const { username, password, confirmPassword } = req.body;
 
-    const user = await db.User.findOne({where: {username}});
+    const user = await db.User.findOne({ where: { username } });
 
-    if (user){
+    if (user) {
         res.status(400).send({ error: "User already exists!" });
-    } else if (password !== confirmPassword){
-        res.status(400).send({ error: "Passwords must match!"});
+    } else if (password !== confirmPassword) {
+        res.status(400).send({ error: "Passwords must match!" });
     } else {
-        const salt = chance.string({length: 24})
+        console.log(user);
+        const salt = chance.string({ length: 24 })
         const pwd_hash = generatePwdHash(password, salt);
 
         const newUser = await db.User.create({ username, pwd_hash, salt });

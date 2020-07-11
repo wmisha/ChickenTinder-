@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       rating: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       location: {
         type: Sequelize.STRING
@@ -21,16 +21,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       distance: {
-        type: Sequelize.INTEGER
-      },
-      vegetarian: {
-        type: Sequelize.BOOLEAN
-      },
-      weelchair: {
-        type: Sequelize.BOOLEAN
-      },
-      cuisine: {
-        type: Sequelize.STRING
+        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,
