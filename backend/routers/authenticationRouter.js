@@ -13,13 +13,13 @@ const chance = new Chance()
 
 const router = express.Router();
 
-const { SECRET } = require(__dirname + '/private.js');
+const { SECRET } = require('../helpers/private.js');
 
 router.use(express.json());
 
-const db = require(__dirname + '/models/index.js');
+const db = require('../models/index.js');
 
-const { bodyHasProp, tryCatchMiddleware } = require(__dirname + '/middleware.js');
+const { bodyHasProp, tryCatchMiddleware } = require('../helpers/middleware.js');
 
 router.use(tryCatchMiddleware);
 

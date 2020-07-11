@@ -1,18 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { API_KEY } = require('./secret_data')
-
-const axios = require('axios').default
-const endPoint = "http://api.yelp.com/v3/businesses/search"
-const { map, pick } = require('ramda');
-const generateJoinCode = require('./generateJoinCode')
-const addRestaurants = require('./addRestaurants');
+const generateJoinCode = require('../helpers/generateJoinCode')
+const addRestaurants = require('../helpers/addRestaurants');
 
 router.use(express.json());
 
-const db = require(__dirname + '/models/index.js');
-
-const { bodyHasProp, tryCatchMiddleware, authorizeJWT } = require('./middleware.js');
+const db = require('../models/index.js');
+const { bodyHasProp, tryCatchMiddleware, authorizeJWT } = require('../helpers/middleware.js');
 
 router.use(tryCatchMiddleware);
 router.use(authorizeJWT);

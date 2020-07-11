@@ -1,4 +1,4 @@
-const db = require('./models')
+const db = require('../models')
 const Chance = require('chance');
 const chance = new Chance();
 
