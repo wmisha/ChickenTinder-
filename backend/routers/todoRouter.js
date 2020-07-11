@@ -3,9 +3,9 @@ const router = express.Router();
 
 router.use(express.json());
 
-const db = require(__dirname + '/models/index.js');
+const db = require('../models/index.js');
 
-const { bodyHasProp, tryCatchMiddleware, authorizeJWT } = require('./middleware.js');
+const { bodyHasProp, tryCatchMiddleware, authorizeJWT } = require('../helpers/middleware.js');
 
 router.use(tryCatchMiddleware);
 router.use(authorizeJWT);

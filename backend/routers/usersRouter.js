@@ -7,7 +7,7 @@ router.use(express.json());
 console.log(__dirname);
 const db = require('../models/index.js');
 
-const { tryCatchMiddleware, authorizeJWT } = require('../middleware.js');
+const { tryCatchMiddleware, authorizeJWT } = require('../helpers/middleware.js');
 
 router.use(tryCatchMiddleware);
 router.use(authorizeJWT);

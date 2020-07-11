@@ -2,7 +2,7 @@ const queryString = require('query-string')
 const { API_KEY } = require('./secret_data')
 const axios = require('axios').default
 const path = "https://api.yelp.com/v3/businesses/search"
-const db = require('./models')
+const db = require('../models')
 
 function addRestaurants(group_id, query){
     query = queryString.stringify(query);
