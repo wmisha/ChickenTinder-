@@ -37,6 +37,8 @@ router.post("/", bodyHasProp('group_name', 'location'), async (req, res) => {
             join_code: await generateJoinCode(),
             Disactive: false
         })
+        console.log(req.user)
+        group.addUser(req.user);
 
         addRestaurants(group.id, parameters)
         res.send({ ...group, addedRestaurants: true });

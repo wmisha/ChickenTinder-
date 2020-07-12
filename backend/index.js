@@ -5,14 +5,16 @@ const todoRouter = require('./routers/todoRouter');
 const authenticationRouter = require('./routers/authenticationRouter')
 const groupRouter = require('./routers/groupRouter');
 const restaurantVoteRouter = require('./routers/restaurantVoteRouter');32
+const usersRouter = require('./routers/usersRouter');
 
 const port = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/todos", todoRouter)
-app.use("/auth", authenticationRouter)
+app.use("/todos", todoRouter);
+app.use('/users', usersRouter);
+app.use("/auth", authenticationRouter);
 app.use("/groups", groupRouter);
 app.use("/restaurants", restaurantVoteRouter);
 
