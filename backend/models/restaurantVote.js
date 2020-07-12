@@ -20,6 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       })
     }
   };
+  {
+    uniqueKeys: {
+        actions_unique: {
+            fields: ['user_id', 'restaurant_id']
+        }
+    }
+  }
   RestaurantVote.init({
     user_id: DataTypes.INTEGER,
     restaurant_id: DataTypes.INTEGER,

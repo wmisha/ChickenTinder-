@@ -23,6 +23,15 @@ module.exports = {
       distance: {
         type: Sequelize.DECIMAL
       },
+      image_url:{
+        type: Sequelize.STRING
+      },
+      url:{
+        type: Sequelize.STRING
+      },
+      phone:{
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
