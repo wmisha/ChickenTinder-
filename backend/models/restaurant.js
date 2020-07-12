@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Restaurant.init({
     group_id: DataTypes.INTEGER,
+    name: DataTypes.STRING,
     rating: DataTypes.INTEGER,
     location: DataTypes.STRING,
     price: DataTypes.INTEGER,
