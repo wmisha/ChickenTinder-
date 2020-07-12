@@ -19,20 +19,16 @@ router.get("/", (req, res) => res.send("Restaurants Router"))
 router.get("/:restaurant_id", (req, res) => {
 
     db.RestaurantVote.findAll({
-        attributes: ['user_id'],
+        attributes: ['vote', [db.sequelize.fn('count', 'vote'), 'count']],
         where: {
           [Op.and]: {
               restaurant_id: req.params.restaurant_id,
-              vote: true
           }
         },
-        group: ['user_id']
-    
+        group: ['user_id', 'vote']   
     })
       .then(lists => {
-          console.log(lists);
-          console.log(lists.length);
-          res.send({size: lists.length});
+          res.send(lists)
     })
 })
 
@@ -53,24 +49,27 @@ router.param('restaurant_id', async (req, res, next, id) => {
     }
 })
 
-router.post("/:restaurant_id", bodyHasProp('restaurant_id'), async (req, res) => {
-    const { restaurant_id } = req.body;
+router.post("/:restaurant_id", bodyHasProp('vote'), async (req, res) => {
+    const { restaurant_id } = req.params;
     const user_id = req.user_id;
 
-    if (!user_id){
-        res.status(400).send({ error: "User not found!"});
-    } else if (restaurant_id && user_id){
+    const previousVote = await db.RestaurantVote.findOne({
+        where: { restaurant_id, user_id }
+    })
+
+    if (previousVote){
         res.status(400).send({ error: "User already voted!"});
     } else {
         try {
             const restaurantVote = await db.RestaurantVote.findOrCreate({
-                restaurant_id: req.body.restaurant_id,
-                user_id: req.user_id,
-                vote: req.body.vote
+                where: {
+                    restaurant_id: restaurant_id,
+                    user_id: req.user_id,
+                    vote: req.body.vote
+                }
+
             })
-    
             res.send(restaurantVote);
-    
         } catch (err) {
             res.status(400).send({ error: err.message })
         }

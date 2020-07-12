@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { SECRET } = require(__dirname + '/private')
+const db = require('../models')
 
 const bodyHasProp = (...propNames) => (req, res, next) => {
 
@@ -14,7 +15,7 @@ const bodyHasProp = (...propNames) => (req, res, next) => {
 }
 
 
-const authorizeJWT = (req, res, next) => {
+const authorizeJWT = async (req, res, next) => {
     const auth = req.headers.authorization;
 
     if (auth){
@@ -29,6 +30,11 @@ const authorizeJWT = (req, res, next) => {
             })
             req.user_id = decoded.id;
             req.username = decoded.username;
+            req.user = await db.User.findOne({
+                where: {
+                    id: decoded.id
+                }
+            })
             next()
         } catch (err){
             res.status(403).send({ error: "Invalid Credential!" });
