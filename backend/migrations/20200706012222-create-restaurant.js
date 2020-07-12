@@ -11,6 +11,9 @@ module.exports = {
       group_id: {
         type: Sequelize.INTEGER
       },
+      name: {
+        type: Sequelize.STRING
+      },
       rating: {
         type: Sequelize.FLOAT
       },
