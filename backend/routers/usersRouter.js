@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
     const user_id = req.user_id;
     const results = await db.UserGroup.findAll({ where: { user_id: user_id } });
     if (results.length === 0) {
-        res.send("You haven't join any group yet!");
+        res.send(JSON.stringify([]));
     } else {
         var Op = db.Sequelize.Op;
         db.Group.findAll({
@@ -41,12 +41,18 @@ router.post("/:join_code", async (req, res) => {
     const user_id = req.user_id;
 
     const group = await db.Group.findOne({ where: { join_code: join_code } });
+
+    if (!group){
+        res.send({ error: 'Group not found'});
+        return 
+    }
+
     db.UserGroup.create({
         user_id,
         group_id: group.id
     })
-        .then(result => res.send(result))
-        .catch(err => console.log(err));
+    .then(result => res.send(result))
+    .catch(err => console.log(err));
 })
 
 
@@ -60,8 +66,8 @@ router.delete("/:group_id", async (req, res) => {
             user_id: user_id
         }
     })
-        .then(res.send("Sucessfully left this group"))
-        .catch(err => console.log(err));
+    .then(res.send("Sucessfully left this group"))
+    .catch(err => console.log(err));
 })
 
 module.exports = router;

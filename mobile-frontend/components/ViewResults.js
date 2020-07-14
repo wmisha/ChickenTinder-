@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import { DataTable } from 'react-native-paper'
 import { connect } from 'react-redux'
 
-import OuterTopBar from './TopBar'
+import SelectGroup from './SelectGroup'
+import TopBar from './TopBar'
 
 const ViewResults = (props) => {
 
@@ -54,21 +55,22 @@ const ViewResults = (props) => {
 
     return (
         <View>
-            <OuterTopBar />
-            <DataTable.Pagination
-                page={page}
-
-                onPageChange={changePage}
-                numberOfPages={Math.floor(items.length / itemsPerPage)}
-                label={`Page ${page} of ${Math.ceil(items.length / itemsPerPage)}`}>
-            </DataTable.Pagination>
-            <DataTable>
-                <DataTable.Header>
+            <TopBar selectGroup={true}/>
+            <SelectGroup style={{zIndex: 100}} />
+            <DataTable style={{position: 'absolute', marginTop: 150, zIndex: -1}}>
+                <DataTable.Header style={{zIndex: -1}}>
                     <DataTable.Title>Restaurant</DataTable.Title>
                     <DataTable.Title numeric>Yes</DataTable.Title>
                     <DataTable.Title numeric>No</DataTable.Title>
                 </DataTable.Header>
                 { items.slice(itemsPerPage * (page - 1), itemsPerPage * page) }
+                <DataTable.Pagination
+                    page={page}
+                    style={{ zIndex: -1 }}
+                    onPageChange={changePage}
+                    numberOfPages={Math.floor(items.length / itemsPerPage)}
+                    label={`Page ${page} of ${Math.ceil(items.length / itemsPerPage)}`}>
+                </DataTable.Pagination>
             </DataTable>
         </View>
     )

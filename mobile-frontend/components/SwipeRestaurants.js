@@ -1,15 +1,31 @@
-import { KeyboardAvoidingView, View, StyleSheet, Platform } from 'react-native'
-import React, { useState } from 'react'
+import { KeyboardAvoidingView, View, StyleSheet, Text } from 'react-native'
+import React, { useEffect } from 'react'
 import { TextInput, Button } from 'react-native-paper'
 import { connect } from 'react-redux'
 import Swiper from './Swiper'
 import TopBar from './TopBar'
+import SelectGroup from './SelectGroup'
+import { showGroupChooser } from '../action_creators'
+
+import { map, pick } from 'ramda'
+
+import { groupListIsLoading, groupListFetchDataSuccess, groupListHasErrored } from '../action_creators'
+
+import getGroupData from '../thunks/getGroupData'
+
 
 const SwipeRestaurants = (props) => {
 
+    useEffect(() => {
+        props.dispatch(getGroupData('http://localhost:5000/users', props.account));
+    }, [])
+
     return (
+
         <View style={styles.wrapper}>
-            <TopBar />
+            <TopBar selectGroup={true}/>
+            <Text selectable>Join Code: {props.joinCode} </Text>
+            <SelectGroup />
             <Swiper />
         </View>
     )
