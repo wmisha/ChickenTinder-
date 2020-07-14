@@ -4,7 +4,7 @@ const db = require('../models')
 
 const bodyHasProp = (...propNames) => (req, res, next) => {
 
-    const invalid = propNames.filter(propName => !req.body[propName]);
+    const invalid = propNames.filter(propName => req.body[propName] === undefined);
 
     if (invalid.length > 0){
         res.status(400).send({ error: `Missing props: [${invalid}]!` });
