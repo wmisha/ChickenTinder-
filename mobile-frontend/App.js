@@ -11,11 +11,12 @@ import ViewResults from './components/ViewResults';
 import SwipeRestaurants from './components/SwipeRestaurants';
 
 import reducer from './reducers'
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 const Drawer = createDrawerNavigator();
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
 store.subscribe(() => console.log(store.getState()));
 
@@ -28,8 +29,8 @@ const App = () => {
           <Drawer.Screen name="Register" component={RegistrationForm} />
           <Drawer.Screen name="Create"component={CreateGroup} />
           <Drawer.Screen name="Join" component={JoinGroup} />
-          <Drawer.Screen name="Results" component={ViewResults} />
-          <Drawer.Screen name="Swipe" component={SwipeRestaurants} />
+          <Drawer.Screen name="Results ▽" component={ViewResults} />
+          <Drawer.Screen name="Swipe ▽" component={SwipeRestaurants} />
         </Drawer.Navigator>
       </NavigationContainer>
     </Provider>

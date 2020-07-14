@@ -7,6 +7,9 @@ import { setAccount, setTitle } from '../action_creators'
 import { useNavigation } from '@react-navigation/native'
 import { connect } from 'react-redux'
 
+import getGroupData from '../thunks/getGroupData'
+import getRestaurantData from '../thunks/getRestaurantData'
+
 const LoginForm = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')

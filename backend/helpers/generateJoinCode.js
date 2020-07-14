@@ -13,7 +13,7 @@ async function generateJoinCode(){
     })
 
     if (group){
-        return generateJoinCode();
+        return await generateJoinCode();
     }
     return random;
 }
