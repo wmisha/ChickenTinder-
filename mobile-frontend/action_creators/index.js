@@ -85,3 +85,10 @@ export function setJoinCode(join_code) {
         join_code
     }
 }
+
+export function setCurrentRestaurant(restaurant_id){
+    return {
+        type: 'SET_CURRENT_RESTAURANT',
+        restaurant_id
+    }
+}

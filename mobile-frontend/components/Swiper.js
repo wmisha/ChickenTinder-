@@ -13,27 +13,31 @@ import { groupListFetchDataSuccess } from '../action_creators';
 import getRestaurantData from '../thunks/getRestaurantData'
 const { map, props, pick } = require('ramda')
 
+import { setCurrentRestaurant } from '../action_creators'
+
 const request = `http://localhost:5000/users`
 
-//const followLink = (link) => {
-//}
-class Card extends React.Component {
+
+class _Card extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
+        this.props.dispatch(setCurrentRestaurant(this.props.id || 2))
         return (
             <View style={styles.shadow} >
                 <View style={styles.card}>
                     <Image style={styles.thumbnail} source={{ uri: this.props.image_url }} />
                     <Text style={styles.text}>{this.props.name}</Text>
-                    <Text>${this.props.price || ''}</Text>
+                    <Text>${'$'.repeat(this.props.price || 0)}</Text>
                 </View>
             </View>
         )
     }
 }
+
+const Card = connect(x => ({...x}))(_Card);
 
 class NoMoreCards extends React.Component {
     constructor(props) {
@@ -68,12 +72,26 @@ class Swiper extends React.Component {
         }
     }
 
-    handleYup(card) {
-        console.log("yup")
+    handleYup = (card) =>  {
+        fetch(`http://localhost:5000/restaurants/${this.props.currentRestaurant}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.props.account}`
+            },
+            body: JSON.stringify({ vote: true })
+        })
     }
 
-    handleNope(card) {
-        console.log("nope")
+    handleNope = (card) => {
+        fetch(`http://localhost:5000/restaurants/${this.props.currentRestaurant}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.props.account}`
+            },
+            body: JSON.stringify({ vote: false })
+        })
     }
 
     cardRemoved(index) {
