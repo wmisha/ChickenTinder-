@@ -19,7 +19,7 @@ const getRestaurantData = (request, account) => {
                 return response;
             })
             .then(response => response.json())
-            .then(map(pick(['name', 'image_url', 'price'])))
+            .then(map(pick(['id', 'name', 'image_url', 'price'])))
             .then(items => {
                 dispatch(restaurantListFetchDataSuccess(items))
             })

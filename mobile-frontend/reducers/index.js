@@ -6,6 +6,7 @@ import groupChooser from './groupChooser'
 import { groupList, groupListHasErrored, groupListIsLoading } from './groupList'
 import { restaurantList, restaurantListHasErrored, restaurantListIsLoading } from './restaurantList'
 
+import currentRestaurant from './currentRestaurant'
 import groupId from './groupId'
 import joinCode from './joinCode'
 
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     restaurantListHasErrored,
     restaurantListIsLoading,
     groupId,
-    joinCode
+    joinCode,
+    currentRestaurant
 })
 
 export default rootReducer;
