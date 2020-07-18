@@ -68,6 +68,22 @@ It will look like below:
 
 ![postman](postman.png)
 
+### Running the Frontend
+
+Once the backend is running, it's time to run the frontend.
+
+To do this on the **web**:
+```
+cd mobile-frontend
+yarn run web
+```
+
+To do this on the **ios emulator** (Must have xcode fully installed on MacOS)
+```
+cd mobile-frontend
+yarn run ios
+```
+
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
