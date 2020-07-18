@@ -27,7 +27,7 @@ For JavaSript package manager, In this application we choose to use Yarn, you ca
 cd mobile-frontend
 yarn
 cd ios
-yarn install
+pod install
 ```
 
 **Backend**
