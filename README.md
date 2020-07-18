@@ -1,9 +1,6 @@
 # ChickenTinderApp
 
 This App is similar to Tinder except that you and your friends are swiping on restaurants. When all users match, then that’s what you’re eating! This app will use the Yelp API to pull nearby restaurants. Users can join a group by entering a generated group ID. Users can also send deeplinks to their friends to download the app
-## Getting Started
-
-_These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system._
 
 ### Prerequisites(PreSetup)
 
@@ -83,10 +80,6 @@ To do this on the **ios emulator** (Must have xcode fully installed on MacOS)
 cd mobile-frontend
 yarn run ios
 ```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built with
 
