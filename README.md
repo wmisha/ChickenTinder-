@@ -8,32 +8,17 @@ Things you need to install the software and how to install them
 
 - [Node Installation](https://nodejs.org/en/)
 
-* [PostgreSQL Vedio Link Installation](https://www.youtube.com/watch?v=fZQI7nBu32M)
+* [PostgreSQL Video Link Installation](https://www.youtube.com/watch?v=fZQI7nBu32M)
 
 For JavaSript package manager, In this application we choose to use Yarn, you can install Yarn through the [Homebrew package manager](https://brew.sh/)
 
 ```
-    brew install yarn
+    $ brew install yarn
 ```
 
 ### Installing
 
-**Frontend**
-
-```
-cd mobile-frontend
-yarn
-cd ios
-pod install
-```
-
-**Backend**
-```
-cd backend
-yarn
-```
-
-## How to Run this Program
+## Running the Backend
 
 Because we choose to process data with sequelize rather than pure quary, after you clone this project, the first thing you need to do is to go to **backend** folder to find **config** folder then get into **config.json** file to change _username_ and _password_ to your own postgres's _name_ and _password_.
 
@@ -41,18 +26,25 @@ If the file you find it looks like below, you are on correct file.
 
 ![development](development.png)
 
-Then run **two statements**(Very Important):
-
-```
-    yarn sequelize db:create
-    yarn sequelize db:migrate
-
-```
-
-After these two statements sequelize will automatically create a todo_project database and 6 tables in your postgres. After this, you finish all backend setup.
+**Installing Backend**
 
 ```bash
-    $ cd backend
+ $ cd backend
+ $ yarn
+```
+
+Then run **two statements**(Very Important):
+
+```bash
+
+   $ yarn sequelize db:create
+   $ yarn sequelize db:migrate
+
+```
+
+After these two statements sequelize will automatically create a todo_project database and 6 tables in your postgres. After this, you finish all backend setup, then run the server.
+
+```bash
     $ yarn run dev
 ```
 
@@ -63,17 +55,28 @@ It will look like below:
 
 ![postman](postman.png)
 
-### Running the Frontend
+## Running the Frontend
 
 Once the backend is running, it's time to run the frontend.
 
-To do this on the **web**:
+**Frontend Installing**
+
 ```
-cd mobile-frontend
+$ cd mobile-frontend
+$ yarn
+$ cd ios
+$ pod install
+
+```
+
+Test on the **web**:
+
+```
 yarn run web
 ```
 
-To do this on the **ios emulator** (Must have xcode fully installed on MacOS)
+Test on the **ios emulator** (Must have xcode fully installed on MacOS)
+
 ```
 cd mobile-frontend
 yarn run ios
@@ -112,4 +115,3 @@ This project is licensed under the MIT License - see the package.json file in ba
 - [PERN Stack Course - Postgres, Express, React, and Node](https://www.youtube.com/watch?v=ldYcgPKEZC8&t=193s)
 - [Learn Redux on Egghead.io with Dan Abramov](https://egghead.io/courses/getting-started-with-redux)
 - [React Native Paper - Lifesaver Preloaded Components!](https://callstack.github.io/react-native-paper/)
-
