@@ -21,26 +21,20 @@ For JavaSript package manager, In this application we choose to use Yarn, you ca
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+**Frontend**
 
 ```
-    yarn add -g nodemon
-
-    yarn add express pg cors
-
-    yarn global add sequelize-cli
-
-    yarn add sequelize
-
-    yarn add pg pg-hstore
-
-    yarn add axios
-
-    yarn add query-string
-
+cd mobile-frontend
+yarn
+cd ios
+yarn install
 ```
+
+**Backend**
+``
+cd backend
+yarn
+``
 
 ## How to Run this Program
 
@@ -55,8 +49,8 @@ If the file you find it looks like below, you are on correct file.
 Then run **two statements**(Very Important):
 
 ```
-    sequelize db:create
-    sequelize db:migrate
+    yarn sequelize db:create
+    yarn sequelize db:migrate
 
 ```
 
