@@ -35,8 +35,6 @@ yarn
 
 ## How to Run this Program
 
-Explain how to run this program in your own machine.
-
 Because we choose to process data with sequelize rather than pure quary, after you clone this project, the first thing you need to do is to go to **backend** folder to find **config** folder then get into **config.json** file to change _username_ and _password_ to your own postgres's _name_ and _password_.
 
 If the file you find it looks like below, you are on correct file.
