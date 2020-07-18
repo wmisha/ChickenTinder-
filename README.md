@@ -1,7 +1,6 @@
 # ChickenTinderApp
 
 This App is similar to Tinder except that you and your friends are swiping on restaurants. When all users match, then that’s what you’re eating! This app will use the Yelp API to pull nearby restaurants. Users can join a group by entering a generated group ID. Users can also send deeplinks to their friends to download the app
-
 ## Getting Started
 
 _These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system._
@@ -37,6 +36,10 @@ Say what the step will be
 
     yarn add pg pg-hstore
 
+    yarn add axios
+
+    yarn add query-string
+
 ```
 
 ## How to Run this Program
@@ -45,7 +48,7 @@ Explain how to run this program in your own machine.
 
 Because we choose to process data with sequelize rather than pure quary, after you clone this project, the first thing you need to do is to go to **backend** folder to find **config** folder then get into **config.json** file to change _username_ and _password_ to your own postgres's _name_ and _password_.
 
-If the file you find it looks like below, you are on right file.
+If the file you find it looks like below, you are on correct file.
 
 ![development](development.png)
 
@@ -57,12 +60,19 @@ Then run **two statements**(Very Important):
 
 ```
 
-After these two statements sequelize will automatically create a todo_project database and tables in Postgres. After this, you finish all backend setup.
+After these two statements sequelize will automatically create a todo_project database and 6 tables in your postgres. After this, you finish all backend setup.
+
+```bash
+    $ cd backend
+    $ yarn run dev
+```
 
 ### Test backend on PostMan
 
 Since this ChickenTinder app has not deployed yet, so you can use postman to test each individual end points.
 It will look like below:
+
+![postman](postman.png)
 
 ## Deployment
 
@@ -77,7 +87,7 @@ Add additional notes about how to deploy this on a live system
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/sfdevshop/ChickenTinderApp/issues) for details on our code of conduct, and the process for submitting pull requests to us.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to se make sure to update tests as appropriate.
 
 ## Versioning
 
