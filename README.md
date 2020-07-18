@@ -2,7 +2,7 @@
 
 This App is similar to Tinder except that you and your friends are swiping on restaurants. When all users match, then that’s what you’re eating! This app will use the Yelp API to pull nearby restaurants. Users can join a group by entering a generated group ID. Users can also send deeplinks to their friends to download the app
 
-### Prerequisites(PreSetup)
+## Prerequisites(PreSetup)
 
 Things you need to install the software and how to install them
 
@@ -16,15 +16,7 @@ For JavaSript package manager, In this application we choose to use Yarn, you ca
     $ brew install yarn
 ```
 
-### Installing
-
 ## Running the Backend
-
-Because we choose to process data with sequelize rather than pure quary, after you clone this project, the first thing you need to do is to go to **backend** folder to find **config** folder then get into **config.json** file to change _username_ and _password_ to your own postgres's _name_ and _password_.
-
-If the file you find it looks like below, you are on correct file.
-
-![development](development.png)
 
 **Installing Backend**
 
@@ -32,6 +24,12 @@ If the file you find it looks like below, you are on correct file.
  $ cd backend
  $ yarn
 ```
+
+Because we choose to process data with sequelize rather than pure quary, after you clone this project, the first thing you need to do is to go to **backend** folder to find **config** folder then get into **config.json** file to change _username_ and _password_ to your own postgres's _name_ and _password_.
+
+If the file you find it looks like below, you are on correct file.
+
+![development](development.png)
 
 Then run **two statements**(Very Important):
 
