@@ -78,6 +78,7 @@ Add additional notes about how to deploy this on a live system
 - Express - An Node.js web application framework
 - Sequelize - A promise-based ORM for Node.js
 - ReactNative - A framework for building native apps using React
+- Redux - Frontend state-management uses redux
 
 ## Contributing
 
@@ -102,3 +103,6 @@ This project is licensed under the MIT License - see the package.json file in ba
 ## Acknowledgements
 
 - [PERN Stack Course - Postgres, Express, React, and Node](https://www.youtube.com/watch?v=ldYcgPKEZC8&t=193s)
+- [Learn Redux on Egghead.io with Dan Abramov](https://egghead.io/courses/getting-started-with-redux)
+- [React Native Paper - Lifesaver Preloaded Components!](https://callstack.github.io/react-native-paper/)
+
