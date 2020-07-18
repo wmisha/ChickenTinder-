@@ -31,10 +31,10 @@ yarn install
 ```
 
 **Backend**
-``
+```
 cd backend
 yarn
-``
+```
 
 ## How to Run this Program
 
