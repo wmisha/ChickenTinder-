@@ -63,6 +63,7 @@ Once the backend is running, it's time to run the frontend.
 $ cd mobile-frontend
 $ yarn
 $ cd ios
+$ sudo gem install cocoapods
 $ pod install
 
 ```
