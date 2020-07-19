@@ -2,38 +2,28 @@
 
 This App is similar to Tinder except that you and your friends are swiping on restaurants. When all users match, then that’s what you’re eating! This app will use the Yelp API to pull nearby restaurants. Users can join a group by entering a generated group ID. Users can also send deeplinks to their friends to download the app
 
-### Prerequisites(PreSetup)
+## Prerequisites(PreSetup)
 
 Things you need to install the software and how to install them
 
 - [Node Installation](https://nodejs.org/en/)
 
-* [PostgreSQL Vedio Link Installation](https://www.youtube.com/watch?v=fZQI7nBu32M)
+* [PostgreSQL Video Link Installation](https://www.youtube.com/watch?v=fZQI7nBu32M)
 
 For JavaSript package manager, In this application we choose to use Yarn, you can install Yarn through the [Homebrew package manager](https://brew.sh/)
 
 ```
-    brew install yarn
+    $ brew install yarn
 ```
 
-### Installing
+## Running the Backend
 
-**Frontend**
+**Installing Backend**
 
+```bash
+ $ cd backend
+ $ yarn
 ```
-cd mobile-frontend
-yarn
-cd ios
-pod install
-```
-
-**Backend**
-```
-cd backend
-yarn
-```
-
-## How to Run this Program
 
 Because we choose to process data with sequelize rather than pure quary, after you clone this project, the first thing you need to do is to go to **backend** folder to find **config** folder then get into **config.json** file to change _username_ and _password_ to your own postgres's _name_ and _password_.
 
@@ -43,16 +33,16 @@ If the file you find it looks like below, you are on correct file.
 
 Then run **two statements**(Very Important):
 
-```
-    yarn sequelize db:create
-    yarn sequelize db:migrate
+```bash
+
+   $ yarn sequelize db:create
+   $ yarn sequelize db:migrate
 
 ```
 
-After these two statements sequelize will automatically create a todo_project database and 6 tables in your postgres. After this, you finish all backend setup.
+After these two statements sequelize will automatically create a todo_project database and 6 tables in your postgres. After this, you finish all backend setup, then run the server.
 
 ```bash
-    $ cd backend
     $ yarn run dev
 ```
 
@@ -63,17 +53,29 @@ It will look like below:
 
 ![postman](postman.png)
 
-### Running the Frontend
+## Running the Frontend
 
 Once the backend is running, it's time to run the frontend.
 
-To do this on the **web**:
+**Frontend Installing**
+
 ```
-cd mobile-frontend
+$ cd mobile-frontend
+$ yarn
+$ cd ios
+$ sudo gem install cocoapods
+$ pod install
+
+```
+
+Test on the **web**:
+
+```
 yarn run web
 ```
 
-To do this on the **ios emulator** (Must have xcode fully installed on MacOS)
+Test on the **ios emulator** (Must have xcode fully installed on MacOS)
+
 ```
 cd mobile-frontend
 yarn run ios
@@ -112,4 +114,3 @@ This project is licensed under the MIT License - see the package.json file in ba
 - [PERN Stack Course - Postgres, Express, React, and Node](https://www.youtube.com/watch?v=ldYcgPKEZC8&t=193s)
 - [Learn Redux on Egghead.io with Dan Abramov](https://egghead.io/courses/getting-started-with-redux)
 - [React Native Paper - Lifesaver Preloaded Components!](https://callstack.github.io/react-native-paper/)
-
