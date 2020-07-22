@@ -51,6 +51,7 @@ const LoginForm = (props) => {
         })
         .then(data => {
           clearInputs()
+          props.dispatch(getGroupData('http://localhost:5000/users', data.accessToken))
           props.dispatch(setAccount(data.accessToken))
           props.dispatch(setTitle('Create'))
           navigation.navigate('Create')

@@ -11,7 +11,7 @@ import currentRestaurant from './currentRestaurant'
 import groupId from './groupId'
 import joinCode from './joinCode'
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     account,
     title,
     groupChooser,
@@ -28,5 +28,13 @@ const rootReducer = combineReducers({
     voteListHasErrored,
     voteListIsLoading
 })
+
+const rootReducer = (state, action) => {
+    if (action.type === 'USER_LOGOUT') {
+        state = undefined
+    }
+
+    return appReducer(state, action)
+}
 
 export default rootReducer;

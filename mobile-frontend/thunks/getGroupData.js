@@ -24,7 +24,7 @@ const getGroupData = (request, account) => {
             dispatch(groupListFetchDataSuccess(items))
         })
         .catch(err =>{
-            alert(err.message)
+            //alert(err.message)
             dispatch(groupListHasErrored(true))
         })
     }

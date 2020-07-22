@@ -22,7 +22,7 @@ const getVoteData = (request, account) => {
             dispatch(voteListFetchDataSuccess(items))
         })
         .catch(err => {
-            alert(err.message)
+            //alert(err.message)
             dispatch(voteListHasErrored(true))
         })
     }

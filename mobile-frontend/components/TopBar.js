@@ -25,10 +25,14 @@ const TopBar = ({ title, account, dispatch, groupId, selectGroup }) => {
   const pressTop = () => {
     if (selectGroup) {
       dispatch(showGroupChooser())
-      //    }
     } else {
       dispatch(showGroupChooser())
     }
+  }
+
+  const Logout = () => {
+    dispatch({type: 'USER_LOGOUT'});
+    navigateTo('Login')();
   }
 
   return (
@@ -52,7 +56,7 @@ const TopBar = ({ title, account, dispatch, groupId, selectGroup }) => {
             <Button onPress={navigateTo('Results ▽')}>View Votes</Button>
             <Button onPress={navigateTo('Join')}>Join Group</Button>
             <Button onPress={navigateTo('Create')}>Create Group</Button>
-            <Button onPress={navigateTo('Login')} icon="door-open">Sign Out</Button>
+            <Button onPress={Logout} icon="door-open">Sign Out</Button>
             <Card.Content>
             </Card.Content>
           </Card>
