@@ -1,27 +1,27 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import 'react-native-gesture-handler'
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
-import RegistrationForm from './components/RegistrationForm';
-import LoginForm from './components/LoginForm';
-import CreateGroup from './components/CreateGroup';
-import JoinGroup from './components/JoinGroup';
-import ViewResults from './components/ViewResults';
-import SwipeRestaurants from './components/SwipeRestaurants';
+import RegistrationForm from './components/RegistrationForm'
+import LoginForm from './components/LoginForm'
+import CreateGroup from './components/CreateGroup'
+import JoinGroup from './components/JoinGroup'
+import ViewResults from './components/ViewResults'
+import SwipeRestaurants from './components/SwipeRestaurants'
 
 import reducer from './reducers'
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import logger from 'redux-logger'
 
-const Drawer = createDrawerNavigator();
-const store = createStore(reducer, applyMiddleware(thunk));
+import thunk from 'redux-thunk'
 
-store.subscribe(() => console.log(store.getState()));
+const Drawer = createDrawerNavigator()
+const store = createStore(reducer, applyMiddleware(thunk, logger))
 
 const App = () => {
-   return (
+  return (
     <Provider store={store}>
       <NavigationContainer>
         <Drawer.Navigator edgeWidth={0}>
@@ -34,7 +34,7 @@ const App = () => {
         </Drawer.Navigator>
       </NavigationContainer>
     </Provider>
-    )
+  )
 }
 
-export default App;
+export default App

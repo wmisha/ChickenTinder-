@@ -6,27 +6,25 @@ const getGroupData = (request, account) => {
     return (dispatch) => {
         dispatch(groupListIsLoading(true));
 
-        fetch(request, {
+        return fetch(request, {
             headers: {
                 'Authorization': `Bearer ${account}`
             }
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                dispatch(groupListIsLoading(false));
-                return response;
-            })
-            .then(response => response.json())
-            .then(map(pick(['id', 'group_name', 'join_code', 'location'])))
-            .then(items => {
-                dispatch(groupListFetchDataSuccess(items))
-            })
-            .catch(err =>{
-                alert(err.message)
-             dispatch(groupListHasErrored(true))
-            })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            dispatch(groupListIsLoading(false));
+            return response;
+        })
+        .then(response => response.json())
+        .then(map(pick(['id', 'group_name', 'join_code', 'location'])))
+        .then(items => {
+            dispatch(groupListFetchDataSuccess(items))
+        }, err => {
+            dispatch(groupListHasErrored(true))
+        })
     }
 }
 

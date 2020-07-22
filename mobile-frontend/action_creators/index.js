@@ -72,6 +72,28 @@ export function restaurantListFetchDataSuccess(items) {
     };
 }
 
+export function voteListHasErrored(bool) {
+    return {
+        type: 'VOTE_LIST_HAS_ERRORED',
+        hasErrored: bool
+    };
+}
+
+export function voteListIsLoading(bool) {
+    return {
+        type: 'VOTE_LIST_IS_LOADING',
+        isLoading: bool
+    };
+}
+
+export function voteListFetchDataSuccess(items) {
+    return {
+        type: 'VOTE_LIST_FETCH_DATA_SUCCESS',
+        items
+    };
+}
+
+
 export function setGroupId(group_id) {
     return {
         type: 'SET_GROUP_ID',

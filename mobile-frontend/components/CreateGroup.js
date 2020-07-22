@@ -1,6 +1,6 @@
-import { KeyboardAvoidingView, View, StyleSheet, Platform } from 'react-native'
+import { KeyboardAvoidingView, View, StyleSheet, Platform, Keyboard } from 'react-native'
 import React, { useState } from 'react'
-import { Keyboard, Text } from 'react-native';
+
 import { TextInput, Button, Snackbar } from 'react-native-paper'
 import { connect } from 'react-redux'
 import OuterTopBar from './TopBar'
@@ -8,19 +8,16 @@ import OuterTopBar from './TopBar'
 import getGroupData from '../thunks/getGroupData'
 
 const CreateGroup = (props) => {
-
-
-  const [visible, setVisible] = useState(true);
-  const [message, setMessage] = useState('Demo Message');
-  const [groupName, setGroupName] = useState('');
-  const [location, setLocation] = useState('');
-
+  const [visible, setVisible] = useState(true)
+  const [message, setMessage] = useState('Demo Message')
+  const [groupName, setGroupName] = useState('')
+  const [location, setLocation] = useState('')
 
   const makeGroup = () => {
     fetch('http://localhost:5000/groups', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${props.account}`,
+        Authorization: `Bearer ${props.account}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -28,19 +25,19 @@ const CreateGroup = (props) => {
         location
       })
     }).then(response => {
-      if (!response.ok){
+      if (!response.ok) {
         throw new Exception('Failed to create group.')
       }
     }).then(() => {
-      props.dispatch(getGroupData(`http://localhost:5000/users`, props.account))
+      props.dispatch(getGroupData('http://localhost:5000/users', props.account))
       setMessage('Group created!')
     })
       .catch(err => setMessage(err.message))
       .finally(() => {
-        Keyboard.dismiss();
-        setGroupName('');
+        Keyboard.dismiss()
+        setGroupName('')
         setLocation('')
-    })
+      })
   }
 
   return (
@@ -75,7 +72,7 @@ const CreateGroup = (props) => {
         <Button
           color="#310A31"
           style={styles.button}
-          onPress={() => { Keyboard.dismiss(); makeGroup(); setVisible(true)}}>Submit</Button>
+          onPress={() => { Keyboard.dismiss(); makeGroup(); setVisible(true) }}>Submit</Button>
 
       </KeyboardAvoidingView>
     </View>
