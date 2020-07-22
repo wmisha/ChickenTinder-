@@ -5,33 +5,29 @@ import { Appbar, Portal, Modal, Card, Button } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { setTitle, showGroupChooser } from '../action_creators'
 import { useNavigation } from '@react-navigation/native'
-import { props } from 'ramda'
 
-import getGroupData from '../thunks/getGroupData'
-
-const TopBar = ({ title, account, dispatch, selectGroup }) => {
-
+const TopBar = ({ title, account, dispatch, groupId, selectGroup }) => {
   const navigation = useNavigation()
   const [visible, setVisible] = React.useState(false)
 
   const setShowModal = (shown) => () => {
-      setVisible(shown);
-      Keyboard.dismiss() 
-    };
+    setVisible(shown)
+    Keyboard.dismiss()
+  }
 
   const navigateTo = (path) => () => {
-    Keyboard.dismiss();
+    Keyboard.dismiss()
     dispatch(setTitle(path))
     navigation.navigate(path)
-    setVisible(false);
+    setVisible(false)
   }
 
   const pressTop = () => {
-    if (selectGroup){
-      dispatch(getGroupData('http://localhost:5000/users', account));
-      dispatch(showGroupChooser());
+    if (selectGroup) {
+      dispatch(showGroupChooser())
+      //    }
     } else {
-      dispatch(showGroupChooser());
+      dispatch(showGroupChooser())
     }
   }
 
@@ -44,7 +40,7 @@ const TopBar = ({ title, account, dispatch, selectGroup }) => {
           color="white"
           style={styles.textPart}
           title={title}
-          titleStyle={{textAlign: 'center'}}
+          titleStyle={{ textAlign: 'center' }}
           onPress={pressTop}
         />
       </Appbar.Header>
@@ -69,7 +65,7 @@ const TopBar = ({ title, account, dispatch, selectGroup }) => {
 const styles = StyleSheet.create({
   topBar: {
     marginBottom: 0,
-    backgroundColor: '#DB5461',
+    backgroundColor: '#DB5461'
   },
 
   modal: {

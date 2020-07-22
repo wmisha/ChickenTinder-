@@ -1,7 +1,7 @@
-import { KeyboardAvoidingView, View, StyleSheet, Platform } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { Keyboard } from 'react-native'
-import { TextInput, Button, Snackbar} from 'react-native-paper'
+import { KeyboardAvoidingView, View, StyleSheet, Platform, Keyboard } from 'react-native'
+import React, { useState } from 'react'
+
+import { TextInput, Button, Snackbar } from 'react-native-paper'
 import { connect } from 'react-redux'
 
 import OuterTopBar from './TopBar'
@@ -9,33 +9,32 @@ import OuterTopBar from './TopBar'
 import getGroupData from '../thunks/getGroupData'
 
 const JoinGroup = (props) => {
-
   const [message, setMessage] = useState('Demo')
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(true)
   const [joinCode, setJoinCode] = useState('')
 
   const makeGroup = () => {
     // ???? Joining a group is at POST /users/joinCode ???
-    // ???  But delete /users/integer is meant for 
+    // ???  But delete /users/integer is meant for
     fetch(`http://localhost:5000/users/${parseInt(joinCode) || 0}`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${props.account}`,
+        Authorization: `Bearer ${props.account}`,
         'Content-Type': 'application/json'
-      },
+      }
     }).then(response => response.json())
       .then(data => {
         if (data.error) {
           throw new Error(data.error)
         }
         return data
-    }).then(() => {
-        props.dispatch(getGroupData(`http://localhost:5000/users`, props.account))
+      }).then(() => {
+        props.dispatch(getGroupData('http://localhost:5000/users', props.account))
         setMessage('Joined Group!')
-    })
+      })
       .catch(err => setMessage(err.message))
       .finally(() => {
-        Keyboard.dismiss();
+        Keyboard.dismiss()
         setJoinCode('')
       })
   }
@@ -66,7 +65,7 @@ const JoinGroup = (props) => {
         <Button
           color="#310A31"
           style={styles.button}
-          onPress={() => { Keyboard.dismiss(); makeGroup(); setVisible(true)}}>
+          onPress={() => { Keyboard.dismiss(); makeGroup(); setVisible(true) }}>
                         Submit
         </Button>
 

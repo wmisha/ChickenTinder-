@@ -2,18 +2,13 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-
 import { connect } from 'react-redux'
-import SwipeCards from '../modified_modules/react-native-tinder-swipe-cards';
+import SwipeCards from '../modified_modules/react-native-tinder-swipe-cards';;
+import getRestaurantData from '../thunks/getRestaurantData';
+import { setCurrentRestaurant } from '../action_creators';
 
-const API_KEY = "v_MKWM24kuJxTljLkFNR_riLoj08oXIAsxAJJHdAYa0gfLbWz37xhS09LUg_qLJm6N7wRrTPYsVVNBdXDvpcEh769L6lqsoA1zyqU_B20CoPYExk2tMC3sWpbrb-XnYx"
-import axios from 'axios'
-import { groupListFetchDataSuccess } from '../action_creators';
+const { props } = require('ramda')
 
-import getRestaurantData from '../thunks/getRestaurantData'
-const { map, props, pick } = require('ramda')
-
-import { setCurrentRestaurant } from '../action_creators'
 
 const request = `http://localhost:5000/users`
 

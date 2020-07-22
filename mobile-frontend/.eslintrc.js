@@ -1,7 +1,11 @@
 module.exports = {
   env: {
-    browser: true,
+    browser: false,
     es2020: true
+  },
+  globals: {
+    'fetch': true,
+    'Exception': true,
   },
   extends: [
     'plugin:react/recommended',

@@ -50,7 +50,7 @@ const LoginForm = (props) => {
           return data
         })
         .then(data => {
-          clearInputs();
+          clearInputs()
           props.dispatch(setAccount(data.accessToken))
           props.dispatch(setTitle('Create'))
           navigation.navigate('Create')
