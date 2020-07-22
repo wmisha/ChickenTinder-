@@ -45,9 +45,9 @@ const SelectGroup = ({ groupChooser, groupList, dispatch, account, groupId }) =>
                 <View key={index} style={{ flexDirection: 'row' }}>
                   <Menu.Item
                     onPress={() => {
-                      dispatch(setGroupId(group.id))
-                      dispatch(setJoinCode(group.join_code))
-                      dispatch(getVoteData(`http://localhost:5000/groups/${groupId}/votes`, account))
+                      dispatch(getVoteData(`http://localhost:5000/groups/${group.id}/votes`, account))
+                        .then(() => dispatch(setGroupId(group.id)))
+                        .then(() => dispatch(setJoinCode(group.join_code)))
                     }}
                     title={group.group_name}
                   >

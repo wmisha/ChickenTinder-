@@ -5,7 +5,7 @@ const getVoteData = (request, account) => {
     return (dispatch) => {
         dispatch(voteListIsLoading(true));
 
-        fetch(request, {
+        return fetch(request, {
             headers: {
                 'Authorization': `Bearer ${account}`
             }
@@ -20,11 +20,7 @@ const getVoteData = (request, account) => {
         .then(response => response.json())
         .then(items => {
             dispatch(voteListFetchDataSuccess(items))
-        })
-        .catch(err => {
-            //alert(err.message)
-            dispatch(voteListHasErrored(true))
-        })
+        }, err => dispatch(voteListHasErrored(true)))
     }
 }
 

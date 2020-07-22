@@ -6,7 +6,7 @@ const getGroupData = (request, account) => {
     return (dispatch) => {
         dispatch(groupListIsLoading(true));
 
-        fetch(request, {
+        return fetch(request, {
             headers: {
                 'Authorization': `Bearer ${account}`
             }
@@ -22,9 +22,7 @@ const getGroupData = (request, account) => {
         .then(map(pick(['id', 'group_name', 'join_code', 'location'])))
         .then(items => {
             dispatch(groupListFetchDataSuccess(items))
-        })
-        .catch(err =>{
-            //alert(err.message)
+        }, err => {
             dispatch(groupListHasErrored(true))
         })
     }
