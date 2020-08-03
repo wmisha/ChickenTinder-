@@ -34,9 +34,9 @@ router.get('/', (req, res) => {
                     };
 
                     if (list.vote) {
-                        response[list.Restaurant.name].yes = +list.dataValues.count
+                        response[list.Restaurant.name].yes += +list.dataValues.count
                     } else {
-                        response[list.Restaurant.name].no = +list.dataValues.count
+                        response[list.Restaurant.name].no += +list.dataValues.count
                     }
                 }
             })
