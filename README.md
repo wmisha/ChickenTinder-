@@ -106,7 +106,7 @@ Current available version: **Version: 1.0.0**
 | Zhenzhen | https://github.com/zznw           | zwang211@dons.usfca.edu    |
 
 ## License
-
+ 
 This project is licensed under the MIT License - see the package.json file in backend folder for details.
  
 ## Acknowledgements
