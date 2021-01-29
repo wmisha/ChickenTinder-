@@ -108,7 +108,7 @@ Current available version: **Version: 1.0.0**
 ## License
 
 This project is licensed under the MIT License - see the package.json file in backend folder for details.
-
+ 
 ## Acknowledgements
 
 - [PERN Stack Course - Postgres, Express, React, and Node](https://www.youtube.com/watch?v=ldYcgPKEZC8&t=193s)
